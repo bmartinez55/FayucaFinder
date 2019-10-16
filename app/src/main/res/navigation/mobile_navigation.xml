@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_map"
-        android:name="c.bmartinez.fayucafinder.View.map.MapFragment"
+        android:name="c.bmartinez.fayucafinder.View.map.MapsFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_map" />
 
