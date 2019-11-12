@@ -33,7 +33,7 @@
             android:name=".View.map.MapsFragment"
             android:label="@string/title_activity_maps_fragment"></activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".View.map.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

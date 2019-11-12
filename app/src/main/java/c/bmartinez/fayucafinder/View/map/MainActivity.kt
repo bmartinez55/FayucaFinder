@@ -1,15 +1,12 @@
-package c.bmartinez.fayucafinder
+package c.bmartinez.fayucafinder.View.map
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import c.bmartinez.fayucafinder.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +16,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
-        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        val navController = Navigation.findNavController(this,
+            R.id.nav_host_fragment
+        )
         setupBottomNavBar(navController)
 
 
