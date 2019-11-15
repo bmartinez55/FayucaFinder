@@ -5,8 +5,52 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="130dp"
-        android:layout_height="100dp"
+        android:layout_width="100dp"
+        android:layout_height="90dp"
         android:id="@+id/fayucaImageView"
-        />
+        android:src="@drawable/truck_black_24dp"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fayucaNameText"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:text="Fayuca Name"
+            android:textColor="@color/colorPrimary"/>
+
+        <TextView
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/fayucaAddressText"
+            android:textSize="18dp"
+            android:textStyle="normal"
+            android:text="2000 Fayuca St, Salinas, CA"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:id="@+id/distanceTextView"
+            android:textStyle="normal"
+            android:text="5.0 mi"
+            />
+    </LinearLayout>
 </LinearLayout>
+    <!--
+        Once DB is linked correctly use fayucas logo instead.
+        On the ImageView, change the drawable to the logo.
+    -->
