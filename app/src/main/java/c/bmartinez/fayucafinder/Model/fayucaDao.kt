@@ -16,4 +16,9 @@ class fayucaDao {
     public fun getName(): String { return name }
 
     public fun getAddress(): String { return address }
+
+    public fun getLatitude(): Double {return latitude }
+
+    public fun getLongitude(): Double { return longitude }
+    
 }
