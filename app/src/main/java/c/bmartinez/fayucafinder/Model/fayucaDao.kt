@@ -20,5 +20,5 @@ class fayucaDao {
     public fun getLatitude(): Double {return latitude }
 
     public fun getLongitude(): Double { return longitude }
-    
+
 }
