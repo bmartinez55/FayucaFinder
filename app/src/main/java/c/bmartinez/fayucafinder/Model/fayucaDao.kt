@@ -13,12 +13,12 @@ class fayucaDao {
         this.latitude = latitude
     }
 
-    public fun getName(): String { return name }
+    fun getName(): String { return name }
 
-    public fun getAddress(): String { return address }
+    fun getAddress(): String { return address }
 
-    public fun getLatitude(): Double {return latitude }
+    fun getLatitude(): Double {return latitude }
 
-    public fun getLongitude(): Double { return longitude }
+    fun getLongitude(): Double { return longitude }
 
 }
