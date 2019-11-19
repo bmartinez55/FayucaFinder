@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <data>
-        <variable android:name="fayuca" android:type="c.bmartinez.fayucafinder.Model.fayucaDao"/>
+        <variable android:name="faydao" android:type="c.bmartinez.fayucafinder.Model.fayucaDao"/>
     </data>
 
     <ImageView
@@ -28,7 +28,7 @@
             android:id="@+id/fayucaNameText"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:text="@{fayuca.name}"
+            android:text="@{faydao.name}"
             android:hint="Fayuca Name"
             android:textColor="@color/colorPrimary"/>
 
@@ -38,7 +38,8 @@
             android:id="@+id/fayucaAddressText"
             android:textSize="18dp"
             android:textStyle="normal"
-            android:text="2000 Fayuca St, Salinas, CA"/>
+            android:text="@{faydao.address}"
+            android:hint="2000 Fayuca St, Salinas, CA"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -51,7 +52,8 @@
             android:textSize="20dp"
             android:id="@+id/distanceTextView"
             android:textStyle="normal"
-            android:text="5.0 mi"
+            android:text="@{faydao.distance}"
+            android:hint="5.0 mi"
             />
     </LinearLayout>
 </LinearLayout>
