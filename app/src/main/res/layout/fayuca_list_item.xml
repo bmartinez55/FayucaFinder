@@ -5,8 +5,7 @@
     android:layout_height="wrap_content">
 
     <data>
-        <variable
-            />
+        <variable android:name="fayuca" android:type="c.bmartinez.fayucafinder.Model.fayucaDao"/>
     </data>
 
     <ImageView
@@ -29,7 +28,8 @@
             android:id="@+id/fayucaNameText"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:text="Fayuca Name"
+            android:text="@{fayuca.name}"
+            android:hint="Fayuca Name"
             android:textColor="@color/colorPrimary"/>
 
         <TextView
