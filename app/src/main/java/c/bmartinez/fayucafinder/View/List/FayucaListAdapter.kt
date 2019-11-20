@@ -1,15 +1,14 @@
 package c.bmartinez.fayucafinder.View.List
 
 import android.content.Context
-import android.os.Parcel
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.BinderThread
 import androidx.recyclerview.widget.RecyclerView
 import c.bmartinez.fayucafinder.Model.fayucaDao
 import c.bmartinez.fayucafinder.R
+import kotlinx.android.synthetic.main.fayuca_list_item.view.*
+import kotlinx.android.synthetic.main.fragment_list.*
 
 class FayucaListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private var mFayucaList: ArrayList<fayucaDao>
@@ -21,11 +20,11 @@ class FayucaListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     override  fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
+        return RecyclerView.ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.fayuca_list_item,parent,false))
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+       holder?.fayucaNameText?.text = mFayucaList.get(position)
     }
 
     override fun getItemCount(): Int {
@@ -34,5 +33,7 @@ class FayucaListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
 }
 
 class FayucaViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-    @BinderThread
+    val vehicleName = view.fayucaNameText
+    val vehicleAddress = view.fayucaAddressText
+    val vehicleDistance = view.distanceTextView
 }
