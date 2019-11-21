@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "712570766131",
+    "firebase_url": "https://findtacotruck-1566611135696.firebaseio.com",
+    "project_id": "findtacotruck-1566611135696",
+    "storage_bucket": "findtacotruck-1566611135696.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:712570766131:android:d1a11567d2b85f8dcaf446",
+        "android_client_info": {
+          "package_name": "c.bmartinez.fayucafinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "712570766131-3gfc0c9vumbn10njnkbe02vljkpc1rs5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2wPlo7Pf0YZGA18Sl-hI6o5bMjvSbplE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "712570766131-3gfc0c9vumbn10njnkbe02vljkpc1rs5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -5,7 +5,7 @@ import androidx.annotation.NonNull
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import c.bmartinez.fayucafinder.Model.fayucaDao
+import c.bmartinez.fayucafinder.Model.Database.fayucaDao
 
 class ListViewModel : ViewModel() {
 

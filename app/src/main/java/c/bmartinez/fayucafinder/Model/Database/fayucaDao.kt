@@ -1,4 +1,4 @@
-package c.bmartinez.fayucafinder.Model
+package c.bmartinez.fayucafinder.Model.Database
 
 class fayucaDao {
     private lateinit var name: String

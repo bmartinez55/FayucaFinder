@@ -5,10 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import c.bmartinez.fayucafinder.Model.fayucaDao
+import c.bmartinez.fayucafinder.Model.Database.fayucaDao
 import c.bmartinez.fayucafinder.R
 import kotlinx.android.synthetic.main.fayuca_list_item.view.*
-import kotlinx.android.synthetic.main.fragment_list.*
 
 class FayucaListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private var mFayucaList: ArrayList<fayucaDao>
