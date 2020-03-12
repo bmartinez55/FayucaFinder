@@ -1,7 +1,7 @@
 package c.bmartinez.fayucafinder.Model.Database
 
 class fayucaDao {
-    private lateinit var name: String
+    /*private lateinit var name: String
     private lateinit var address: String
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
@@ -23,6 +23,6 @@ class fayucaDao {
 
     fun getLongitude(): Double { return longitude }
 
-    fun getDistance(): Double { return distance }
+    fun getDistance(): Double { return distance }*/
 
 }
