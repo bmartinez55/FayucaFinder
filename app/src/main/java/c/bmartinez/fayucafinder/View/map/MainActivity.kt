@@ -1,6 +1,7 @@
 package c.bmartinez.fayucafinder.View.map
 
 import android.os.Bundle
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -19,6 +20,8 @@ class MainActivity : AppCompatActivity() {
         val navController = Navigation.findNavController(this,
             R.id.nav_host_fragment
         )
+
+        noActionBar()
         setupBottomNavBar(navController)
 
 
@@ -36,5 +39,10 @@ class MainActivity : AppCompatActivity() {
         nav_view?.let {
             NavigationUI.setupWithNavController(it, navController)
         }
+    }
+
+    private fun noActionBar(){
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        actionBar?.hide()
     }
 }
