@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <data>
-        <variable android:name="faydao" android:type="c.bmartinez.fayucafinder.Model.fayucaDao"/>
+        <variable android:name="faydao" android:type="c.bmartinez.fayucafinder.Model.Database.fayucaDao"/>
     </data>
 
     <ImageView
