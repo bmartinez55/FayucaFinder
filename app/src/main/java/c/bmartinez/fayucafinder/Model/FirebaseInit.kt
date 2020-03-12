@@ -6,6 +6,7 @@ import c.bmartinez.fayucafinder.BuildConfig
 import c.bmartinez.fayucafinder.R
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+//import java.util.logging.Handler as
 
 class FirebaseInit {
     private var remoteConfig: FirebaseRemoteConfig? = null
@@ -14,7 +15,7 @@ class FirebaseInit {
     private var mContext: Context? = null
     private var mCount: Int = 0
 
-    fun getTrucks(context: Context): String {
+    /*fun getTrucks(context: Context): String {
         mContext = context
         mProgressBar = ProgressDialog(mContext)
         mProgressBar!!.setCancelable(false)
@@ -26,10 +27,20 @@ class FirebaseInit {
 
         remoteConfig = FirebaseRemoteConfig.getInstance()
         remoteConfig!!.setConfigSettings(remoteConfigSettings)
-        remoteConfig!!.setDefaults(R.xml.remote_config)
+        remoteConfig!!.setDefaults(R.remote_config)
 
         var cacheExpiration: Long = 0
 
         if(remoteConfig!!.info.configSettings.isDeveloperModeEnabled){ cacheExpiration = 0 }
-    }
+
+        mProgressBar!!.show()
+
+        val handler: Handler
+
+        remoteConfig!!.activateFetched()
+
+        mTrucks = remoteConfig!!.getString()
+
+
+    }*/
 }
