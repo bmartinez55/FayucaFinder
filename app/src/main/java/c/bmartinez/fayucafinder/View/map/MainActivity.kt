@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         noActionBar()
         setupBottomNavBar(navController)
-
+        setFragments()
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -44,5 +45,13 @@ class MainActivity : AppCompatActivity() {
     private fun noActionBar(){
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         actionBar?.hide()
+    }
+
+    private fun setFragments(){
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        val fragment: MapsFragment = MapsFragment()
+        fragmentTransaction.add(R.id.map,fragment)
+        fragmentTransaction.commit()
     }
 }
