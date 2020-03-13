@@ -9,8 +9,8 @@ import c.bmartinez.fayucafinder.Model.Database.fayucaDao
 import c.bmartinez.fayucafinder.R
 import kotlinx.android.synthetic.main.fayuca_list_item.view.*
 
-class FayucaListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private var mFayucaList: ArrayList<fayucaDao>
+//class FayucaListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    /*private var mFayucaList: ArrayList<fayucaDao>
     private var mContext: Context
 
     constructor(context: Context, fayucas: ArrayList<fayucaDao>){
@@ -34,5 +34,5 @@ class FayucaListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
 class FayucaViewHolder (view: View) : RecyclerView.ViewHolder(view) {
     val vehicleName = view.fayucaNameText
     val vehicleAddress = view.fayucaAddressText
-    val vehicleDistance = view.distanceTextView
-}
+    val vehicleDistance = view.distanceTextView*/
+//}
