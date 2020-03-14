@@ -1,5 +1,7 @@
 package c.bmartinez.fayucafinder.View.map
 
+import android.app.Activity
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcel
@@ -7,6 +9,7 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -22,6 +25,10 @@ import com.google.android.gms.maps.model.MarkerOptions
 class MapsFragment() :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    companion object{
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view: View = inflater.inflate(R.layout.fragment_map,container,false)
@@ -61,6 +68,18 @@ class MapsFragment() :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
 
         map.uiSettings.isZoomControlsEnabled = true
         map.setOnMarkerClickListener(this)
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,12.0f))
+        setUpMap()
+    }
+
+    private fun setUpMap(){
+        if(context?.let { ActivityCompat.checkSelfPermission(it, android.Manifest.permission.ACCESS_FINE_LOCATION) } !=
+                PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(
+                context as Activity, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+            LOCATION_PERMISSION_REQUEST_CODE)
+            return
+        }
     }
 
     override fun onMarkerClick(p0: Marker?): Boolean = false
