@@ -97,6 +97,12 @@ class MapsFragment() :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
         }
     }
 
+    private fun placeMarkerOnMap(location: LatLng){
+        val markerOptions = MarkerOptions().position(location)
+
+        map.addMarker(markerOptions)
+    }
+
     override fun onMarkerClick(p0: Marker?): Boolean = false
 
     private fun isFusedLocationClientInitialized() = ::fusedLocationClient.isInitialized
