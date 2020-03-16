@@ -2,8 +2,11 @@ package c.bmartinez.fayucafinder.View.map
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Location
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcel
@@ -12,25 +15,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import c.bmartinez.fayucafinder.R
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
 
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-//Fragment()
-class MapsFragment() :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+import java.util.jar.Manifest
+
+class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
 
+    //Needed for user location updates
+    private lateinit var locationCallback: LocationCallback
+    private lateinit var locationRequest: LocationRequest
+    private var locationUpdateState = false
+
     companion object{
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+
+        private const val REQUEST_CHECK_SETTINGS = 2
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -42,17 +54,6 @@ class MapsFragment() :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.context!!)
         return view
     }
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.fragment_map)
-//        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-//        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-//        mapFragment.getMapAsync(this)
-//
-//        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
-    //}
 
     /**
      * Manipulates the map once available.
@@ -69,10 +70,12 @@ class MapsFragment() :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
         map.uiSettings.isZoomControlsEnabled = true
         map.setOnMarkerClickListener(this)
 
-        setUpMap()
         isFusedLocationClientInitialized()
-        getCurrentLocation()
+        isLocationRequestInitialized()
 
+        setUpMap()
+        //getCurrentLocation()
+        createLocationRequest()
     }
 
     private fun setUpMap(){
@@ -83,6 +86,7 @@ class MapsFragment() :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
             LOCATION_PERMISSION_REQUEST_CODE)
             return
         }
+        getCurrentLocation()
     }
 
     private fun getCurrentLocation(){
@@ -95,6 +99,18 @@ class MapsFragment() :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentCoordinates, 12.0f))
             }
         }
+
+        map.isMyLocationEnabled = true
+
+        fusedLocationClient.lastLocation.addOnSuccessListener {location ->
+            //Got last known location. In some rare situations this can be null.
+            if(location !=null){
+                lastLocation = location
+                val currentLatLng = LatLng(location.latitude, location.longitude)
+                placeMarkerOnMap(currentLatLng)
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12.0f))
+            }
+        }
     }
 
     private fun placeMarkerOnMap(location: LatLng){
@@ -103,7 +119,101 @@ class MapsFragment() :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickLis
         map.addMarker(markerOptions)
     }
 
+    private fun startLocationUpdates(){
+        if(context?.let { ActivityCompat.checkSelfPermission(it, android.Manifest.permission.ACCESS_FINE_LOCATION) }
+        != PackageManager.PERMISSION_GRANTED) {
+            activity?.let {
+                ActivityCompat.requestPermissions(
+                    it,arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                    LOCATION_PERMISSION_REQUEST_CODE)
+            }
+            return
+        }
+        registerLocationListener()
+        fusedLocationClient.requestLocationUpdates(locationRequest,locationCallback, null)
+    }
+
+    private fun createLocationRequest() {
+        locationRequest = LocationRequest()
+        locationRequest.interval = 10000
+
+        locationRequest.fastestInterval = 5000
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+
+        val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
+
+        val client = activity?.let { LocationServices.getSettingsClient(it) }
+        val task = client?.checkLocationSettings(builder.build())
+
+        task?.addOnSuccessListener {
+            locationUpdateState = true
+            startLocationUpdates()
+        }
+
+        task?.addOnFailureListener { exception ->
+            if(exception is ResolvableApiException){
+                //Location settings are not satisfied, but this can be fixed by showing thhe user
+                // a dialog
+                try{
+                    //Show the dialog by calling startResolutionForResults(),
+                    //and check the result in onActivityResult().
+                    exception.startResolutionForResult(activity, REQUEST_CHECK_SETTINGS)
+                } catch(sendException: IntentSender.SendIntentException){
+                    //Ignore this error
+                }
+            }
+        }
+    }
+
+    //starts the update request if it has a RESULT_OK result
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == REQUEST_CHECK_SETTINGS){
+            if(resultCode == Activity.RESULT_OK){
+                locationUpdateState = true
+                startLocationUpdates()
+            }
+        }
+    }
+
+    //stop location update request
+    override fun onPause() {
+        super.onPause()
+        fusedLocationClient.removeLocationUpdates(locationCallback)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        startLocationUpdates()
+    }
+
+    //restart the location update request
+    override fun onResume() {
+        super.onResume()
+        if(!locationUpdateState){
+            startLocationUpdates()
+        }
+    }
+
     override fun onMarkerClick(p0: Marker?): Boolean = false
 
     private fun isFusedLocationClientInitialized() = ::fusedLocationClient.isInitialized
+    private fun isLocationRequestInitialized() = ::locationRequest.isInitialized
+
+    private fun registerLocationListener() {
+        //Initialize location callback object
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(p0: LocationResult?) {
+                onLocationChanged(p0!!.lastLocation)
+            }
+        }
+    }
+
+    private fun onLocationChanged(location: Location){
+        map.clear()
+        map.addMarker(MarkerOptions().position(LatLng(location.latitude,location.longitude)))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude,location.longitude), 12.0f))
+    }
+
 }
+
