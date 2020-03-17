@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import c.bmartinez.fayucafinder.R
+import com.google.firebase.FirebaseApp
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -16,6 +17,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        FirebaseApp.initializeApp(this)
+
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = Navigation.findNavController(this,
@@ -25,16 +29,6 @@ class MainActivity : AppCompatActivity() {
         noActionBar()
         setupBottomNavBar(navController)
         setFragments()
-
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-//        val appBarConfiguration = AppBarConfiguration(
-//            setOf(
-//                R.id.navigation_map, R.id.navigation_list, R.id.navigation_profile
-//            )
-//        )
-//        setupActionBarWithNavController(navController, appBarConfiguration)
-//        navView.setupWithNavController(navController)
     }
     private fun setupBottomNavBar(navController: NavController){
         nav_view?.let {
