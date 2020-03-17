@@ -62,6 +62,7 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-database:19.2.1'
     implementation 'com.google.firebase:firebase-firestore-ktx:21.4.1'
+    implementation 'com.google.firebase:firebase-database-ktx:19.2.1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
