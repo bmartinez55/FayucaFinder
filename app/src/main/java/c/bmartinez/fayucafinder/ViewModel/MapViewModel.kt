@@ -1,14 +1,10 @@
 package c.bmartinez.fayucafinder.ViewModel
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import c.bmartinez.fayucafinder.Model.Database.TrucksDao
-import c.bmartinez.fayucafinder.Model.FirebaseRepository
+import c.bmartinez.fayucafinder.Model.TrucksDao
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.getValue
 
 class MapViewModel : ViewModel() {
 //    private val repository: FirebaseDatabase = FirebaseDatabase.getInstance()
