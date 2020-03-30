@@ -1,25 +1,26 @@
 package c.bmartinez.fayucafinder.View.map
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Location
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProviders
+import c.bmartinez.fayucafinder.Model.TrucksDao
 import c.bmartinez.fayucafinder.R
+import c.bmartinez.fayucafinder.ViewModel.MapViewModel
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
@@ -27,8 +28,10 @@ import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import java.util.jar.Manifest
+import com.google.firebase.database.DataSnapshot
+import java.lang.Exception
 
+@Suppress("DEPRECATION")
 class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -37,6 +40,11 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     //Needed for user location updates
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
+
+    private lateinit var liveData: LiveData<DataSnapshot>
+    private val viewModel = activity?.let { ViewModelProviders.of(it).get(MapViewModel::class.java) }
+    private var trucks: List<TrucksDao> = emptyList()
+
     private var locationUpdateState = false
 
     companion object{
@@ -52,6 +60,11 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         mapSupport.getMapAsync(this)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.context!!)
+        locationRequest = LocationRequest()
+
+        viewModel?.getTrucks()?.observe(this.viewLifecycleOwner, Observer { it ->
+            trucks = it
+        })
         return view
     }
 
@@ -71,11 +84,20 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         map.setOnMarkerClickListener(this)
 
         isFusedLocationClientInitialized()
-        isLocationRequestInitialized()
 
         setUpMap()
-        //getCurrentLocation()
         createLocationRequest()
+        postMarkersOfTrucks()
+        checkListIsNull()
+    }
+
+    //Check if List empty
+    private fun checkListIsNull(){
+        if(trucks.isEmpty())
+            Log.d("CHECK", "THIS LIST IS EMPTY")
+        for(it in trucks){
+            Log.d("Truck Item: ", it.getTruckName())
+        }
     }
 
     private fun setUpMap(){
@@ -113,6 +135,13 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         }
     }
 
+    private fun postMarkersOfTrucks() {
+        for(truckObject in trucks){
+            var latLng: LatLng = LatLng(truckObject.location!!.latitude,truckObject.location!!.longitude)
+            placeMarkerOnMap(latLng)
+        }
+    }
+
     private fun placeMarkerOnMap(location: LatLng){
         val markerOptions = MarkerOptions().position(location)
 
@@ -134,7 +163,6 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     }
 
     private fun createLocationRequest() {
-        locationRequest = LocationRequest()
         locationRequest.interval = 10000
 
         locationRequest.fastestInterval = 5000
@@ -196,9 +224,8 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     }
 
     override fun onMarkerClick(p0: Marker?): Boolean = false
-
     private fun isFusedLocationClientInitialized() = ::fusedLocationClient.isInitialized
-    private fun isLocationRequestInitialized() = ::locationRequest.isInitialized
+
 
     private fun registerLocationListener() {
         //Initialize location callback object
