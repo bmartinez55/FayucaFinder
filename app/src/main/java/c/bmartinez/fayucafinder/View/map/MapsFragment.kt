@@ -6,15 +6,19 @@ import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
+import c.bmartinez.fayucafinder.Model.TrucksDao
 import c.bmartinez.fayucafinder.R
 import c.bmartinez.fayucafinder.ViewModel.MapViewModel
 import com.google.android.gms.common.api.ResolvableApiException
@@ -38,7 +42,8 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     private lateinit var locationRequest: LocationRequest
 
     private lateinit var liveData: LiveData<DataSnapshot>
-    private lateinit var viewModel: MapViewModel by viewModel()
+    private val viewModel = activity?.let { ViewModelProviders.of(it).get(MapViewModel::class.java) }
+    private var trucks: List<TrucksDao> = emptyList()
 
     private var locationUpdateState = false
 
@@ -55,8 +60,11 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         mapSupport.getMapAsync(this)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.context!!)
+        locationRequest = LocationRequest()
 
-        viewMode
+        viewModel?.getTrucks()?.observe(this.viewLifecycleOwner, Observer { it ->
+            trucks = it
+        })
         return view
     }
 
@@ -76,11 +84,20 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         map.setOnMarkerClickListener(this)
 
         isFusedLocationClientInitialized()
-        isLocationRequestInitialized()
 
         setUpMap()
-        //getCurrentLocation()
         createLocationRequest()
+        postMarkersOfTrucks()
+        checkListIsNull()
+    }
+
+    //Check if List empty
+    private fun checkListIsNull(){
+        if(trucks.isEmpty())
+            Log.d("CHECK", "THIS LIST IS EMPTY")
+        for(it in trucks){
+            Log.d("Truck Item: ", it.getTruckName())
+        }
     }
 
     private fun setUpMap(){
@@ -118,6 +135,13 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         }
     }
 
+    private fun postMarkersOfTrucks() {
+        for(truckObject in trucks){
+            var latLng: LatLng = LatLng(truckObject.location!!.latitude,truckObject.location!!.longitude)
+            placeMarkerOnMap(latLng)
+        }
+    }
+
     private fun placeMarkerOnMap(location: LatLng){
         val markerOptions = MarkerOptions().position(location)
 
@@ -139,7 +163,6 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     }
 
     private fun createLocationRequest() {
-        locationRequest = LocationRequest()
         locationRequest.interval = 10000
 
         locationRequest.fastestInterval = 5000
@@ -201,9 +224,8 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     }
 
     override fun onMarkerClick(p0: Marker?): Boolean = false
-
     private fun isFusedLocationClientInitialized() = ::fusedLocationClient.isInitialized
-    private fun isLocationRequestInitialized() = ::locationRequest.isInitialized
+
 
     private fun registerLocationListener() {
         //Initialize location callback object
