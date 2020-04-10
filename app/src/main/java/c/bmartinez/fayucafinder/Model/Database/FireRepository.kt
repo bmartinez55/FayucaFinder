@@ -2,14 +2,22 @@ package c.bmartinez.fayucafinder.Model.Database
 
 import com.google.firebase.database.*
 import androidx.lifecycle.LiveData
+import c.bmartinez.fayucafinder.Model.TrucksDao
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 //: LiveData<DataSnapshot>()
 class FireRepository{
     private val fireDB = FirebaseFirestore.getInstance()
 
-    fun getTrucks(): CollectionReference{
-        return fireDB.collection("truckOwners")
+    fun getTrucks(): List<TrucksDao>{
+        val collection : CollectionReference = fireDB.collection("truckOwners")
+        var collectionList : List<TrucksDao>
+
+        collection.get().addOnSuccessListener { document ->
+
+        }
+
+        return
     }
 
 
