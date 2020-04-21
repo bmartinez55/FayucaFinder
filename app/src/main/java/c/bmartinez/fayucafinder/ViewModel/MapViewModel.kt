@@ -15,40 +15,20 @@ class MapViewModel(private val fireRepo: FireRepository) : ViewModel() {
     private var trucks: MutableLiveData<List<TrucksDao>> = MutableLiveData()
 
     fun getTrucks(): LiveData<List<TrucksDao>>{
-        fireRepo.getTrucks().addSnapshotListener(EventListener<QuerySnapshot>{value, e ->
+        fireRepo.getTrucks().addSnapshotListener(EventListener{value, e ->
             if(e != null) {
                 Log.w(TAG, "Listen Failed", e)
                 return@EventListener
             }
 
-            var truckList: MutableList<TrucksDao> = mutableListOf()
+            val truckList: MutableList<TrucksDao> = mutableListOf()
             for(trucksObject in value!!){
-                var truck = trucksObject.toObject(TrucksDao::class.java)
+                val truck = trucksObject.toObject(TrucksDao::class.java)
                 truckList.add(truck)
             }
             trucks.value = truckList
         })
 
         return trucks
-//        if(trucks.value == null){
-//            FirebaseDatabase.getInstance().getReference("truckOwners")
-//                .addListenerForSingleValueEvent(object : ValueEventListener {
-//                    override fun onCancelled(dataError: DatabaseError) {
-//                        TODO("Not yet implemented")
-//                    }
-//
-//                    override fun onDataChange(data: DataSnapshot) {
-//                        if(data.exists()){
-//                            trucks.postValue()
-//                        }
-//                    }
-//
-//                })
-//        }
-//        return trucks
-    }
-
-    private fun loadTrucks(){
-
     }
 }

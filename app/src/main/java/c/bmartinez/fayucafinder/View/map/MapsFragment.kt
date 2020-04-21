@@ -54,18 +54,24 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view: View = inflater.inflate(R.layout.fragment_map,container,false)
-        var mapSupport: SupportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        val view: View = inflater.inflate(R.layout.fragment_map,container,false)
+        val mapSupport: SupportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
 
         mapSupport.getMapAsync(this)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.context!!)
         locationRequest = LocationRequest()
 
-        viewModel?.getTrucks()?.observe(this.viewLifecycleOwner, Observer { it ->
+        viewModel?.getTrucks()?.observe(this.viewLifecycleOwner, Observer { it
             trucks = it
         })
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        
     }
 
     /**
@@ -121,23 +127,11 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentCoordinates, 12.0f))
             }
         }
-
-        map.isMyLocationEnabled = true
-
-        fusedLocationClient.lastLocation.addOnSuccessListener {location ->
-            //Got last known location. In some rare situations this can be null.
-            if(location !=null){
-                lastLocation = location
-                val currentLatLng = LatLng(location.latitude, location.longitude)
-                placeMarkerOnMap(currentLatLng)
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12.0f))
-            }
-        }
     }
 
     private fun postMarkersOfTrucks() {
         for(truckObject in trucks){
-            var latLng: LatLng = LatLng(truckObject.location!!.latitude,truckObject.location!!.longitude)
+            val latLng = LatLng(truckObject.location!!.latitude,truckObject.location!!.longitude)
             placeMarkerOnMap(latLng)
         }
     }
