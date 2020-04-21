@@ -47,6 +47,8 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 
     private var locationUpdateState = false
 
+    private var truckModel: TrucksDao? = null
+
     companion object{
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
 
@@ -61,17 +63,21 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.context!!)
         locationRequest = LocationRequest()
+        truckModel = ViewModelProviders.of(this).get(MapViewModel::class.java)
 
-        viewModel?.getTrucks()?.observe(this.viewLifecycleOwner, Observer { it
-            trucks = it
-        })
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        
+
+
+        viewModel?.getTrucks()?.observe(this.viewLifecycleOwner, Observer { it
+            trucks = it
+        })
+
+
     }
 
     /**
@@ -237,4 +243,5 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     }
 
 }
+
 
