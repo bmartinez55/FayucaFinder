@@ -1,5 +1,6 @@
 package c.bmartinez.fayucafinder.ViewModel
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,6 +14,8 @@ import com.google.firebase.firestore.ktx.toObject
 class MapViewModel(private val fireRepo: FireRepository) : ViewModel() {
     val TAG = "MAP_VIEW_MODEL"
     private var trucks: MutableLiveData<List<TrucksDao>> = MutableLiveData()
+
+    //constructor(application: Application) : this() { super(application)}
 
     fun getTrucks(): LiveData<List<TrucksDao>>{
         fireRepo.getTrucks().addSnapshotListener(EventListener{value, e ->
