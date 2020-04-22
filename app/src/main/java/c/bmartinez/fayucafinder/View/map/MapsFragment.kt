@@ -12,15 +12,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProviders
+
+import androidx.lifecycle.*
+import c.bmartinez.fayucafinder.Components.MyComponents
 import c.bmartinez.fayucafinder.Model.TrucksDao
 import c.bmartinez.fayucafinder.R
 import c.bmartinez.fayucafinder.ViewModel.MapViewModel
+import c.bmartinez.fayucafinder.ViewModel.ViewModelFactory
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
@@ -29,7 +27,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.database.DataSnapshot
-import java.lang.Exception
 
 @Suppress("DEPRECATION")
 class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -42,12 +39,13 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     private lateinit var locationRequest: LocationRequest
 
     private lateinit var liveData: LiveData<DataSnapshot>
-    private val viewModel = activity?.let { ViewModelProviders.of(it).get(MapViewModel::class.java) }
-    private var trucks: List<TrucksDao> = emptyList()
+    private lateinit var trucks: ArrayList<TrucksDao>
+
+    private lateinit var mapViewModel: MapViewModel
+    private var viewModelFactory: ViewModelFactory? = null
+    private var components: MyComponents? = null
 
     private var locationUpdateState = false
-
-    private var truckModel: TrucksDao? = null
 
     companion object{
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -63,21 +61,21 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.context!!)
         locationRequest = LocationRequest()
-        truckModel = ViewModelProviders.of(this).get(MapViewModel::class.java)
+        components?.inject(this)
 
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-
-        viewModel?.getTrucks()?.observe(this.viewLifecycleOwner, Observer { it
-            trucks = it
-        })
-
-
+        activity?.let {
+            mapViewModel = ViewModelProviders.of(it, viewModelFactory).get(MapViewModel::class.java)
+            mapViewModel.getTrucks().observe(this.viewLifecycleOwner, Observer {
+                for(index in it)
+                    trucks.add(index)
+            })
+            checkListIsNull()
+        }
     }
 
     /**
@@ -100,7 +98,7 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         setUpMap()
         createLocationRequest()
         postMarkersOfTrucks()
-        checkListIsNull()
+        //checkListIsNull()
     }
 
     //Check if List empty
@@ -158,7 +156,7 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
             }
             return
         }
-        registerLocationListener()
+        //registerLocationListener()
         fusedLocationClient.requestLocationUpdates(locationRequest,locationCallback, null)
     }
 
@@ -227,20 +225,20 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     private fun isFusedLocationClientInitialized() = ::fusedLocationClient.isInitialized
 
 
-    private fun registerLocationListener() {
-        //Initialize location callback object
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(p0: LocationResult?) {
-                onLocationChanged(p0!!.lastLocation)
-            }
-        }
-    }
+//    private fun registerLocationListener() {
+//        //Initialize location callback object
+//        locationCallback = object : LocationCallback() {
+//            override fun onLocationResult(p0: LocationResult?) {
+//                onLocationChanged(p0!!.lastLocation)
+//            }
+//        }
+//    }
 
-    private fun onLocationChanged(location: Location){
-        map.clear()
-        map.addMarker(MarkerOptions().position(LatLng(location.latitude,location.longitude)))
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude,location.longitude), 12.0f))
-    }
+//    private fun onLocationChanged(location: Location){
+//        map.clear()
+//        map.addMarker(MarkerOptions().position(LatLng(location.latitude,location.longitude)))
+//        map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude,location.longitude), 12.0f))
+//    }
 
 }
 
