@@ -1,6 +1,7 @@
 package c.bmartinez.fayucafinder.ViewModel.Modules
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import c.bmartinez.fayucafinder.ViewModel.MapViewModel
 import dagger.Binds
 import dagger.Module
@@ -12,4 +13,7 @@ abstract class MyViewModelModule {
     @IntoMap
     @ViewModelKey(MapViewModel::class)
     abstract fun bindMyViewModel(mapViewModel: MapViewModel): ViewModel
+
+    @Binds
+    abstract fun bindViewModelFactory(factory: DaggerViewModelFactory): ViewModelProvider.Factory
 }
