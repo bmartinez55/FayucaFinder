@@ -18,8 +18,9 @@ import c.bmartinez.fayucafinder.Components.MyComponents
 import c.bmartinez.fayucafinder.Model.TrucksDao
 import c.bmartinez.fayucafinder.R
 import c.bmartinez.fayucafinder.ViewModel.MapViewModel
-import c.bmartinez.fayucafinder.ViewModel.ViewModelFactory
+import c.bmartinez.fayucafinder.ViewModel.Modules.DaggerViewModelFactory
 import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.common.api.internal.LifecycleActivity
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
 
@@ -27,9 +28,10 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.database.DataSnapshot
+import javax.inject.Inject
 
 @Suppress("DEPRECATION")
-class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
@@ -38,14 +40,15 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
 
-    private lateinit var liveData: LiveData<DataSnapshot>
     private lateinit var trucks: ArrayList<TrucksDao>
 
     private lateinit var mapViewModel: MapViewModel
-    private var viewModelFactory: ViewModelFactory? = null
     private var components: MyComponents? = null
-
     private var locationUpdateState = false
+
+
+    var viewModelFactory: DaggerViewModelFactory? = null
+        @Inject set
 
     companion object{
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -61,16 +64,15 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.context!!)
         locationRequest = LocationRequest()
-        components?.inject(this)
-
+        components!!.inject(this)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.let {
-            mapViewModel = ViewModelProviders.of(it, viewModelFactory).get(MapViewModel::class.java)
-            mapViewModel.getTrucks().observe(this.viewLifecycleOwner, Observer {
+        activity?.run {
+            mapViewModel = ViewModelProviders.of(this, viewModelFactory).get(MapViewModel::class.java)
+            mapViewModel.getTrucks().observe(viewLifecycleOwner, Observer {
                 for(index in it)
                     trucks.add(index)
             })
