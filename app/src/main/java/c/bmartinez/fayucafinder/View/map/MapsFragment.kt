@@ -44,9 +44,10 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     private var components: MyComponents? = null
     private var locationUpdateState = false
 
-
-    var viewModelFactory: DaggerViewModelFactory? = null
-        @Inject set
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+//    var viewModelFactory: DaggerViewModelFactory? = null
+//        @Inject set
 
     companion object{
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -59,15 +60,16 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         val mapSupport: SupportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
 
         mapSupport.getMapAsync(this)
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.context!!)
         locationRequest = LocationRequest()
-        components!!.inject(this)
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        components?.inject(this)
         activity?.run {
             mapViewModel = ViewModelProviders.of(this, viewModelFactory).get(MapViewModel::class.java)
             mapViewModel.getTrucks().observe(viewLifecycleOwner, Observer {
