@@ -7,36 +7,21 @@ import java.lang.IllegalArgumentException
 import java.lang.RuntimeException
 import javax.inject.Inject
 import javax.inject.Provider
+import javax.inject.Singleton
 
-@Suppress("UNCHECKED_CAST")
-class DaggerViewModelFactory @Inject constructor(private val viewModelsMap: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>):
-        ViewModelProvider.Factory {
+@Singleton
+class DaggerViewModelFactory @Inject constructor(private val viewmodelsMap: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>):
+    ViewModelProvider.Factory {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        var creator: Provider<out ViewModel>? = viewModelsMap[modelClass]
-        if(creator == null) {
-                for((key,value) in viewModelsMap){
-                    if(modelClass.isAssignableFrom(key)){
-                        creator = value
-                        break
-                    }
-                }
-            }
-
-        if(creator == null) { throw IllegalArgumentException("Unknown model class" + modelClass) }
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        val creator = viewmodelsMap[modelClass] ?:
+            viewmodelsMap.entries.first{ modelClass.isAssignableFrom(it.key)}.value
 
         try{
             return creator.get() as T
         }catch (e: Exception){
             throw RuntimeException(e)
         }
-//                viewModelsMap.asIterable().firstOrNull{
-//                    modelClass.isAssignableFrom(it.key)
-//                }?.value ?: throw IllegalArgumentException("Unknown Model class $modelClass")
-//        return try{
-//            creator.get() as T
-//        } catch (e: Exception){
-//            throw RuntimeException(e)
-//        }
     }
 }
