@@ -14,20 +14,18 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 
 import androidx.lifecycle.*
-import c.bmartinez.fayucafinder.Components.MyComponents
+import c.bmartinez.fayucafinder.DataInjection.MyComponents
 import c.bmartinez.fayucafinder.Model.TrucksDao
 import c.bmartinez.fayucafinder.R
 import c.bmartinez.fayucafinder.ViewModel.MapViewModel
-import c.bmartinez.fayucafinder.ViewModel.Modules.DaggerViewModelFactory
+import c.bmartinez.fayucafinder.DataInjection.DaggerViewModelFactory
 import com.google.android.gms.common.api.ResolvableApiException
-import com.google.android.gms.common.api.internal.LifecycleActivity
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
 
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.firebase.database.DataSnapshot
 import javax.inject.Inject
 
 @Suppress("DEPRECATION")

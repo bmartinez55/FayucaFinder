@@ -1,12 +1,9 @@
-package c.bmartinez.fayucafinder.ViewModel.Modules
+package c.bmartinez.fayucafinder.DataInjection
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import c.bmartinez.fayucafinder.ViewModel.MapViewModel
+import c.bmartinez.fayucafinder.DataInjection.DaggerViewModelFactory
 import dagger.Binds
 import dagger.Module
-import dagger.multibindings.IntoMap
-import javax.inject.Inject
 
 @Module
 abstract class ViewModelFactoryModule{

@@ -1,15 +1,12 @@
-package c.bmartinez.fayucafinder.ViewModel.Modules
+package c.bmartinez.fayucafinder.DataInjection
 
-import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import c.bmartinez.fayucafinder.ViewModel.MapViewModel
 import java.lang.Exception
 import java.lang.IllegalArgumentException
 import java.lang.RuntimeException
 import javax.inject.Inject
 import javax.inject.Provider
-import kotlin.reflect.KClass
 
 @Suppress("UNCHECKED_CAST")
 class DaggerViewModelFactory @Inject constructor(private val viewModelsMap: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>):
