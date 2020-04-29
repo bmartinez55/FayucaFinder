@@ -1,4 +1,4 @@
-package c.bmartinez.fayucafinder.DataInjection
+package c.bmartinez.fayucafinder.DataInjection.Components
 
 import androidx.lifecycle.ViewModel
 import c.bmartinez.fayucafinder.ViewModel.MapViewModel
