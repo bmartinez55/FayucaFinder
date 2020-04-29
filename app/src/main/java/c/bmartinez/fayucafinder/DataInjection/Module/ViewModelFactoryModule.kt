@@ -1,7 +1,7 @@
-package c.bmartinez.fayucafinder.DataInjection
+package c.bmartinez.fayucafinder.DataInjection.Module
 
 import androidx.lifecycle.ViewModelProvider
-import c.bmartinez.fayucafinder.DataInjection.DaggerViewModelFactory
+import c.bmartinez.fayucafinder.DataInjection.Factory.DaggerViewModelFactory
 import dagger.Binds
 import dagger.Module
 
