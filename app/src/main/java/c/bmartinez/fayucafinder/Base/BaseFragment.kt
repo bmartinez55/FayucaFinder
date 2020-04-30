@@ -11,11 +11,10 @@ import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-@Suppress("UNCHECKED_CAST")
 abstract class BaseFragment<V: BaseViewModel<S>, S: ViewState>(open var viewModel: V): Fragment(){
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    open lateinit var viewModelFactory: ViewModelProvider.Factory
 
     protected open fun onBindViewModel(){
         observeState()
