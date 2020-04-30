@@ -9,16 +9,13 @@ import javax.inject.Provider
 import javax.inject.Singleton
 
 @Singleton
-class DaggerViewModelFactory @Inject constructor(private val viewmodelsMap: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>):
+class DaggerViewModelFactory @Inject constructor(private val viewModelsMap: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>):
     ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        val creator = viewmodelsMap[modelClass] ?:
-            viewmodelsMap.entries.first{ modelClass.isAssignableFrom(it.key)}.value
-
         try{
-            return creator.get() as T
+            return viewModelsMap.get(modelClass) as T
         }catch (e: Exception){
             throw RuntimeException(e)
         }

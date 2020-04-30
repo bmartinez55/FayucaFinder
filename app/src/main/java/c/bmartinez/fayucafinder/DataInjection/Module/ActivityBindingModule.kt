@@ -10,12 +10,8 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 
 @Module
-abstract class MyViewModelModule {
-    @Binds
-    @IntoMap
-    @ViewModelKey(MapViewModel::class)
-    abstract fun bindMyViewModel(mapViewModel: MapViewModel): ViewModel
+abstract class ActivityBindingModule {
 
-    @Binds
-    abstract fun bindViewModelFactory(factory: DaggerViewModelFactory): ViewModelProvider.Factory
+
+
 }

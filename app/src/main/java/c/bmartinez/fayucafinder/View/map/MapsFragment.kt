@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment
 
 import androidx.lifecycle.*
 import c.bmartinez.fayucafinder.DataInjection.Components.MyComponents
-import c.bmartinez.fayucafinder.Model.TrucksDao
+import c.bmartinez.fayucafinder.Model.Trucks
 import c.bmartinez.fayucafinder.R
 import c.bmartinez.fayucafinder.ViewModel.MapViewModel
 import com.google.android.gms.common.api.ResolvableApiException
@@ -37,14 +37,14 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
 
-    private lateinit var trucks: ArrayList<TrucksDao>
+    private lateinit var trucks: ArrayList<Trucks>
 
     private lateinit var mapViewModel: MapViewModel
-    private var components: MyComponents? = null
+    //private var components: MyComponents? = null
+    val components = MyComponents.getComponents()
     private var locationUpdateState = false
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 //    var viewModelFactory: DaggerViewModelFactory? = null
 //        @Inject set
 
