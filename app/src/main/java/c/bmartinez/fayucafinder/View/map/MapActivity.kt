@@ -9,10 +9,15 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import c.bmartinez.fayucafinder.R
+import c.bmartinez.fayucafinder.Utilities.ActivityUtilities
 import com.google.firebase.FirebaseApp
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MapActivity :DaggerAppCompatActivity() {
+    @Inject
+    lateinit var mapFragment: MapsFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         noActionBar()
         setupBottomNavBar(navController)
-        setFragments()
+        setUpActivity()
     }
     private fun setupBottomNavBar(navController: NavController){
         nav_view?.let {
@@ -41,11 +46,13 @@ class MainActivity : AppCompatActivity() {
         actionBar?.hide()
     }
 
-    private fun setFragments(){
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        val fragment: MapsFragment = MapsFragment()
-        fragmentTransaction.add(R.id.map,fragment)
-        fragmentTransaction.commit()
+    private fun setUpActivity(){
+        var fragment = supportFragmentManager.findFragmentById(R.id.map)
+
+        if(fragment == null){
+            fragment = mapFragment
+            ActivityUtilities.addFragmentToActivity(supportFragmentManager,fragment,
+            R.id.map)
+        }
     }
 }
