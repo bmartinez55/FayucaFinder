@@ -14,7 +14,10 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 
 import androidx.lifecycle.*
+import c.bmartinez.fayucafinder.Base.BaseFragment
+import c.bmartinez.fayucafinder.Base.BaseViewModel
 import c.bmartinez.fayucafinder.DataInjection.Components.MyComponents
+import c.bmartinez.fayucafinder.DataInjection.Scope.ActivityScoped
 import c.bmartinez.fayucafinder.Model.Trucks
 import c.bmartinez.fayucafinder.R
 import c.bmartinez.fayucafinder.ViewModel.MapViewModel
@@ -28,7 +31,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 import javax.inject.Inject
 
 @Suppress("DEPRECATION")
-class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
+@ActivityScoped
+class MapsFragment @Inject constructor(override var viewModel: MapViewModel): BaseFragment<MapViewModel, MapViewState>(viewModel), OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
@@ -52,6 +56,13 @@ class MapsFragment :Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListe
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
 
         private const val REQUEST_CHECK_SETTINGS = 2
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        this.mapViewModel = ViewModelProviders.of(this, viewModelFactory).get(MapViewModel::class.java)
+
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
