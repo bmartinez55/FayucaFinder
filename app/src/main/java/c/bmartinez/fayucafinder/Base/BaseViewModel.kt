@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import c.bmartinez.fayucafinder.Model.Database.FireRepository
 
 abstract class BaseViewModel<S: ViewState>(val fireRepository: FireRepository, val viewState: S): ViewModel(){
-    protected val stateLiveData = MutableLiveData<ViewState>()
+    private val stateLiveData = MutableLiveData<ViewState>()
 
     fun getState(): MutableLiveData<ViewState>{
         return this.stateLiveData

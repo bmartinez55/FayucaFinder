@@ -4,12 +4,18 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import c.bmartinez.fayucafinder.Base.BaseViewModel
+import c.bmartinez.fayucafinder.Base.ViewState
+import c.bmartinez.fayucafinder.DataInjection.Scope.AppScoped
 import c.bmartinez.fayucafinder.Model.Database.FireRepository
 import c.bmartinez.fayucafinder.Model.Trucks
+import c.bmartinez.fayucafinder.View.map.MapViewState
 import com.google.firebase.firestore.EventListener
 import javax.inject.Inject
 
-class MapViewModel @Inject constructor(private val fireRepo: FireRepository) : ViewModel(){
+@AppScoped
+class MapViewModel @Inject constructor(fireRepo: FireRepository,
+    viewState: MapViewState): BaseViewModel<MapViewState>(fireRepo, viewState){
     val TAG = "MAP_VIEW_MODEL"
     private var trucks: MutableLiveData<List<Trucks>> = MutableLiveData()
 

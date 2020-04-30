@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import c.bmartinez.fayucafinder.Base.BaseFragment
 import c.bmartinez.fayucafinder.Base.BaseViewModel
+import c.bmartinez.fayucafinder.Base.ViewState
 import c.bmartinez.fayucafinder.DataInjection.Components.MyComponents
 import c.bmartinez.fayucafinder.DataInjection.Scope.ActivityScoped
 import c.bmartinez.fayucafinder.Model.Trucks
@@ -32,7 +33,7 @@ import javax.inject.Inject
 
 @Suppress("DEPRECATION")
 @ActivityScoped
-class MapsFragment @Inject constructor(override var viewModel: MapViewModel): BaseFragment<MapViewModel, MapViewState>(viewModel), OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
+class MapsFragment @Inject constructor(override var viewModel: MapViewModel): BaseFragment<, MapViewState>(viewModel), OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
@@ -48,7 +49,8 @@ class MapsFragment @Inject constructor(override var viewModel: MapViewModel): Ba
     val components = MyComponents.getComponents()
     private var locationUpdateState = false
 
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    override lateinit var viewModelFactory: ViewModelProvider.Factory
 //    var viewModelFactory: DaggerViewModelFactory? = null
 //        @Inject set
 
@@ -235,6 +237,17 @@ class MapsFragment @Inject constructor(override var viewModel: MapViewModel): Ba
 
     override fun onMarkerClick(p0: Marker?): Boolean = false
     private fun isFusedLocationClientInitialized() = ::fusedLocationClient.isInitialized
+    override fun updateUi(state: MapViewState) {
+        TODO("Not yet implemented")
+    }
+
+    override fun attachClickListeners() {
+        TODO("Not yet implemented")
+    }
+
+    override fun getLayoutResourceFile(): Int {
+        TODO("Not yet implemented")
+    }
 
 
 //    private fun registerLocationListener() {
