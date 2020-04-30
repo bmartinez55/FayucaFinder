@@ -1,39 +1,32 @@
 package c.bmartinez.fayucafinder.Model.Database
 
-import android.util.Log
-import com.google.firebase.database.*
-import c.bmartinez.fayucafinder.Model.TrucksDao
+import androidx.lifecycle.MutableLiveData
+import c.bmartinez.fayucafinder.Model.Trucks
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.GeoPoint
+import javax.inject.Inject
 
-class FireRepository{
+class FireRepository @Inject constructor(){
     private val database = FirebaseFirestore.getInstance()
-//    private val myReference = database.reference
-//    private val truckNode = myReference.child("truckOwners")
-//    private lateinit var onTruck: ((TrucksDao?) -> Unit)
-//    private lateinit var truckId: String
+    private val trucksLiveData = MutableLiveData<ArrayList<Trucks>>()
 
-//    private  val valueEventListener = object : ValueEventListener{
-//        override fun onDataChange(p0: DataSnapshot) {
-//            val truckData = p0.child(truckId).getValue(TrucksDao::class.java)
-//            onTruck(truckData)
-//            closeListener()
-//        }
-//        override fun onCancelled(p0: DatabaseError) {
-//            onTruck(null)
-//            closeListener()
-//        }
-//
-//    }
+    fun getTrucks() {
+        database.collection("truckOwners").addSnapshotListener{ snapShot, exception ->
+            if(exception != null){
+                exception.printStackTrace()
+                return@addSnapshotListener
+            }
 
-    fun getTrucks(): CollectionReference {
-        return database.collection("truckOwners")
+            val trucks = snapShot?.documents?.map{
+                Trucks(
+                    it["Name"] as String,
+                    it["description"] as String,
+                    (it["location"]) as GeoPoint
+                )
+            }
+            trucks?.let { trucksLiveData.postValue(trucks as ArrayList<Trucks>?) }
+        }
     }
-
-//    private fun closeListener(){
-//        truckNode.removeEventListener(valueEventListener)
-//    }
 
 }
