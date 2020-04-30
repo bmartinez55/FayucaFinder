@@ -1,21 +1,25 @@
-package c.bmartinez.fayucafinder.DataInjection.Factory
+package c.bmartinez.fayucafinder.ViewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import c.bmartinez.fayucafinder.DataInjection.Scope.AppScoped
 import java.lang.Exception
 import java.lang.RuntimeException
 import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
 
-@Singleton
-class DaggerViewModelFactory @Inject constructor(private val viewModelsMap: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>):
+@AppScoped
+class DaggerViewModelFactory @Inject constructor(private val viewModels: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>):
     ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         try{
-            return viewModelsMap.get(modelClass) as T
+            val provider = viewModels[modelClass]?: viewModels.entries.first{
+                modelClass.isAssignableFrom(it.key)
+            }.value
+            return provider.get() as T
         }catch (e: Exception){
             throw RuntimeException(e)
         }

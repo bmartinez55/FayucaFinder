@@ -7,7 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import javax.inject.Inject
 
-class FireRepository @Inject constructor(){
+class FireRepository {
     private val database = FirebaseFirestore.getInstance()
     private val trucksLiveData = MutableLiveData<ArrayList<Trucks>>()
 
