@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class FireRepository {
     private val database = FirebaseFirestore.getInstance()
-    private val trucksLiveData = MutableLiveData<ArrayList<Trucks>>()
+    val trucksRepoLiveData = MutableLiveData<ArrayList<Trucks>>()
 
     fun getTrucks() {
         database.collection("truckOwners").addSnapshotListener{ snapShot, exception ->
@@ -25,7 +25,7 @@ class FireRepository {
                     (it["location"]) as GeoPoint
                 )
             }
-            trucks?.let { trucksLiveData.postValue(trucks as ArrayList<Trucks>?) }
+            trucks?.let { trucksRepoLiveData.postValue(trucks as ArrayList<Trucks>?) }
         }
     }
 

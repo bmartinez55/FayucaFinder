@@ -10,7 +10,7 @@ import javax.inject.Provider
 import javax.inject.Singleton
 
 @AppScoped
-class DaggerViewModelFactory @Inject constructor(private val viewModels: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>):
+class DaggerViewModelFactory @Inject constructor(private val viewModels: @JvmSuppressWildcards(true) Map<Class<out ViewModel>, @JvmSuppressWildcards(true) Provider<ViewModel>>):
     ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
