@@ -7,7 +7,7 @@ import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 
 @Module
-abstract class ActivityBindingModule {
+class ActivityBindingModule {
     @ActivityScoped
     @Provides
     //@ContributesAndroidInjector(modules = [MapActivity::class])
