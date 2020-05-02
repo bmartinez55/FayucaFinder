@@ -4,9 +4,10 @@ import androidx.lifecycle.ViewModel
 import c.bmartinez.fayucafinder.ViewModel.MapViewModel
 import dagger.MapKey
 import java.lang.annotation.RetentionPolicy
+import javax.inject.Qualifier
 import kotlin.reflect.KClass
 
-@MustBeDocumented
+@Qualifier
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER)
 @Retention(AnnotationRetention.RUNTIME)
 @MapKey

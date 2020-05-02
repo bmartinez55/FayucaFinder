@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
+@Suppress("UNCHECKED_CAST")
 abstract class BaseFragment<V: BaseViewModel<S>, S: ViewState>(open var viewModel: V): Fragment(){
 
     @Inject

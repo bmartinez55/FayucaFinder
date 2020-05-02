@@ -3,11 +3,10 @@ package c.bmartinez.fayucafinder.View.map
 import android.os.Bundle
 import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
+import c.bmartinez.fayucafinder.DataInjection.Components.MyComponents
 import c.bmartinez.fayucafinder.R
 import c.bmartinez.fayucafinder.Utilities.ActivityUtilities
 import com.google.firebase.FirebaseApp
@@ -18,12 +17,14 @@ import javax.inject.Inject
 class MapActivity :DaggerAppCompatActivity() {
     @Inject
     lateinit var mapFragment: MapsFragment
+    lateinit var components: MyComponents
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         FirebaseApp.initializeApp(this)
+        components
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
@@ -56,3 +57,4 @@ class MapActivity :DaggerAppCompatActivity() {
         }
     }
 }
+

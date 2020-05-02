@@ -19,6 +19,7 @@ import c.bmartinez.fayucafinder.Base.BaseViewModel
 import c.bmartinez.fayucafinder.Base.ViewState
 import c.bmartinez.fayucafinder.DataInjection.Components.MyComponents
 import c.bmartinez.fayucafinder.DataInjection.Scope.ActivityScoped
+import c.bmartinez.fayucafinder.Model.Database.FireRepository
 import c.bmartinez.fayucafinder.Model.Trucks
 import c.bmartinez.fayucafinder.R
 import c.bmartinez.fayucafinder.ViewModel.MapViewModel
@@ -33,7 +34,7 @@ import javax.inject.Inject
 
 @Suppress("DEPRECATION")
 @ActivityScoped
-class MapsFragment @Inject constructor(override var viewModel: MapViewModel): BaseFragment<, MapViewState>(viewModel), OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
+class MapsFragment @Inject constructor(viewModel: @JvmSuppressWildcards(true) MapViewModel): BaseFragment<MapViewModel, MapViewState>(viewModel), OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
@@ -42,17 +43,10 @@ class MapsFragment @Inject constructor(override var viewModel: MapViewModel): Ba
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
 
-    private lateinit var trucks: ArrayList<Trucks>
 
-    private lateinit var mapViewModel: MapViewModel
-    //private var components: MyComponents? = null
-    val components = MyComponents.getComponents()
     private var locationUpdateState = false
-
-    @Inject
-    override lateinit var viewModelFactory: ViewModelProvider.Factory
-//    var viewModelFactory: DaggerViewModelFactory? = null
-//        @Inject set
+    private lateinit var truckData: ArrayList<Trucks>
+    private lateinit var components: MyComponents.Builder
 
     companion object{
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -62,7 +56,9 @@ class MapsFragment @Inject constructor(override var viewModel: MapViewModel): Ba
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        this.mapViewModel = ViewModelProviders.of(this, viewModelFactory).get(MapViewModel::class.java)
+        this.viewModel = ViewModelProviders.of(this, viewModelFactory).get(MapViewModel::class.java)
+        viewModel.startInitialActivity()
+        components.build()
 
         setHasOptionsMenu(true)
     }
@@ -76,20 +72,6 @@ class MapsFragment @Inject constructor(override var viewModel: MapViewModel): Ba
         locationRequest = LocationRequest()
 
         return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        components?.inject(this)
-        activity?.run {
-            mapViewModel = ViewModelProviders.of(this, viewModelFactory).get(MapViewModel::class.java)
-            mapViewModel.getTrucks().observe(viewLifecycleOwner, Observer {
-                for(index in it)
-                    trucks.add(index)
-            })
-            checkListIsNull()
-        }
     }
 
     /**
@@ -111,17 +93,6 @@ class MapsFragment @Inject constructor(override var viewModel: MapViewModel): Ba
 
         setUpMap()
         createLocationRequest()
-        postMarkersOfTrucks()
-        //checkListIsNull()
-    }
-
-    //Check if List empty
-    private fun checkListIsNull(){
-        if(trucks.isEmpty())
-            Log.d("CHECK", "THIS LIST IS EMPTY")
-        for(it in trucks){
-            Log.d("Truck Item: ", it.getTruckName())
-        }
     }
 
     private fun setUpMap(){
@@ -144,13 +115,6 @@ class MapsFragment @Inject constructor(override var viewModel: MapViewModel): Ba
                 val currentCoordinates = LatLng(location.latitude, location.longitude)
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentCoordinates, 12.0f))
             }
-        }
-    }
-
-    private fun postMarkersOfTrucks() {
-        for(truckObject in trucks){
-            val latLng = LatLng(truckObject.location!!.latitude,truckObject.location!!.longitude)
-            placeMarkerOnMap(latLng)
         }
     }
 
@@ -237,8 +201,18 @@ class MapsFragment @Inject constructor(override var viewModel: MapViewModel): Ba
 
     override fun onMarkerClick(p0: Marker?): Boolean = false
     private fun isFusedLocationClientInitialized() = ::fusedLocationClient.isInitialized
+
+    private fun setUpMarkersOfTrucks(trucks: ArrayList<Trucks>) {
+        for(it in trucks){
+            val latLng = LatLng(it.location.latitude, it.location.longitude)
+            placeMarkerOnMap(latLng)
+        }
+    }
+
     override fun updateUi(state: MapViewState) {
-        TODO("Not yet implemented")
+        state.trucksViewModelLiveDate?.observe(this, Observer {
+            setUpMarkersOfTrucks(it)
+        })
     }
 
     override fun attachClickListeners() {
