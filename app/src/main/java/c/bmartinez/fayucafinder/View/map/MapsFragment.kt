@@ -56,9 +56,9 @@ class MapsFragment @Inject constructor(viewModel: @JvmSuppressWildcards(true) Ma
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        components.build()
         this.viewModel = ViewModelProviders.of(this, viewModelFactory).get(MapViewModel::class.java)
         viewModel.startInitialActivity()
-        components.build()
 
         setHasOptionsMenu(true)
     }
@@ -68,7 +68,7 @@ class MapsFragment @Inject constructor(viewModel: @JvmSuppressWildcards(true) Ma
         val mapSupport: SupportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
 
         mapSupport.getMapAsync(this)
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.context!!)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.context)
         locationRequest = LocationRequest()
 
         return view
