@@ -6,20 +6,16 @@ import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.Fragment
 
 import androidx.lifecycle.*
 import c.bmartinez.fayucafinder.Base.BaseFragment
-import c.bmartinez.fayucafinder.Base.BaseViewModel
-import c.bmartinez.fayucafinder.Base.ViewState
 import c.bmartinez.fayucafinder.DataInjection.Components.MyComponents
 import c.bmartinez.fayucafinder.DataInjection.Scope.ActivityScoped
-import c.bmartinez.fayucafinder.Model.Database.FireRepository
+import c.bmartinez.fayucafinder.FayucaFinderApplication
 import c.bmartinez.fayucafinder.Model.Trucks
 import c.bmartinez.fayucafinder.R
 import c.bmartinez.fayucafinder.ViewModel.MapViewModel
@@ -46,7 +42,8 @@ class MapsFragment @Inject constructor(viewModel: @JvmSuppressWildcards(true) Ma
 
     private var locationUpdateState = false
     private lateinit var truckData: ArrayList<Trucks>
-    private lateinit var components: MyComponents.Builder
+    private lateinit var components: MyComponents
+    private lateinit var app: FayucaFinderApplication
 
     companion object{
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -56,7 +53,6 @@ class MapsFragment @Inject constructor(viewModel: @JvmSuppressWildcards(true) Ma
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        components.build()
         this.viewModel = ViewModelProviders.of(this, viewModelFactory).get(MapViewModel::class.java)
         viewModel.startInitialActivity()
 
@@ -66,9 +62,9 @@ class MapsFragment @Inject constructor(viewModel: @JvmSuppressWildcards(true) Ma
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_map,container,false)
         val mapSupport: SupportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-
+        components.inject(app)
         mapSupport.getMapAsync(this)
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.context)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         locationRequest = LocationRequest()
 
         return view

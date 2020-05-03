@@ -24,7 +24,7 @@ class MapActivity :DaggerAppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         FirebaseApp.initializeApp(this)
-        components
+        components.inject(this)
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
