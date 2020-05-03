@@ -18,15 +18,15 @@ import javax.inject.Singleton
     ViewModelModule::class,
     FirebaseRepositoryModule::class,
     ViewStateModule::class])
-interface MyComponents {
-    fun inject(app: Application)
+interface MyComponents : AndroidInjector<Application>{
+    //fun inject(app: Application)
 
-//    @Component.Builder
-//    interface Builder {
-//
-//        @BindsInstance
-//        fun application(application: Application): Builder
-//        fun build(): MyComponents
-//: AndroidInjector<Application>
-//    }
+    @Component.Builder
+    interface Builder {
+
+        @BindsInstance
+        fun application(application: Application): Builder
+        fun build(): MyComponents
+
+    }
 }
