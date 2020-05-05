@@ -9,14 +9,11 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
-
+//private val application: FayucaFinderApplication
 @Module
-class AppModule(private val application: FayucaFinderApplication) {
+class AppModule() {
     @Provides @Singleton
-    fun provideApplication() = application
-//    fun provideApplication(application: FayucaFinderApplication): SharedPreferences? {
-//        return application.getSharedPreferences("store", Context.MODE_PRIVATE)
-//    }
+    fun provideApplication(application: Application) = application
     //abstract fun bindContext(application: Application): Context
 
 }

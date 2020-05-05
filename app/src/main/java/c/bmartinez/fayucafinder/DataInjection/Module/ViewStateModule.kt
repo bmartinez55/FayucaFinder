@@ -1,7 +1,6 @@
 package c.bmartinez.fayucafinder.DataInjection.Module
 
 import c.bmartinez.fayucafinder.Base.ViewState
-import c.bmartinez.fayucafinder.DataInjection.Scope.AppScoped
 import c.bmartinez.fayucafinder.View.map.MapViewState
 import dagger.Binds
 import dagger.Module
