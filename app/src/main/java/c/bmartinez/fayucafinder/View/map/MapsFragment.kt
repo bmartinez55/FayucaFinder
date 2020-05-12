@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 
 import androidx.lifecycle.*
 import c.bmartinez.fayucafinder.Base.BaseFragment
@@ -27,10 +28,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import javax.inject.Inject
-
+//@Inject constructor(viewModel: @JvmSuppressWildcards(true) MapViewModel): BaseFragment<MapViewModel, MapViewState>(viewModel),
 @Suppress("DEPRECATION")
-@ActivityScoped
-class MapsFragment @Inject constructor(viewModel: @JvmSuppressWildcards(true) MapViewModel): BaseFragment<MapViewModel, MapViewState>(viewModel), OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
+class MapsFragment: Fragment(),  OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
@@ -42,12 +42,9 @@ class MapsFragment @Inject constructor(viewModel: @JvmSuppressWildcards(true) Ma
 
     private var locationUpdateState = false
     private lateinit var truckData: ArrayList<Trucks>
-    private lateinit var components: MyComponents
-    private lateinit var app: FayucaFinderApplication
 
     companion object{
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
-
         private const val REQUEST_CHECK_SETTINGS = 2
     }
 
@@ -62,7 +59,6 @@ class MapsFragment @Inject constructor(viewModel: @JvmSuppressWildcards(true) Ma
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_map,container,false)
         val mapSupport: SupportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        components.inject(app)
         mapSupport.getMapAsync(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         locationRequest = LocationRequest()
@@ -204,21 +200,6 @@ class MapsFragment @Inject constructor(viewModel: @JvmSuppressWildcards(true) Ma
             placeMarkerOnMap(latLng)
         }
     }
-
-    override fun updateUi(state: MapViewState) {
-        state.trucksViewModelLiveDate?.observe(this, Observer {
-            setUpMarkersOfTrucks(it)
-        })
-    }
-
-    override fun attachClickListeners() {
-        TODO("Not yet implemented")
-    }
-
-    override fun getLayoutResourceFile(): Int {
-        TODO("Not yet implemented")
-    }
-
 
 //    private fun registerLocationListener() {
 //        //Initialize location callback object
