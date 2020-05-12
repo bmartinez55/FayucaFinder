@@ -7,6 +7,6 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class ActivityBindingModule {
-    @ContributesAndroidInjector
-    abstract fun mapActivity(): MapActivity
+    @ContributesAndroidInjector(modules = [FragmentModule::class])
+    abstract fun contributeMapActivity(): MapActivity
 }

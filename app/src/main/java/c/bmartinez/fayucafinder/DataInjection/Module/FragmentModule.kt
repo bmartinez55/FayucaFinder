@@ -5,13 +5,15 @@ import c.bmartinez.fayucafinder.View.map.MapsFragment
 import c.bmartinez.fayucafinder.ViewModel.DaggerViewModelFactory
 import dagger.Binds
 import dagger.Module
+import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.ClassKey
 import dagger.multibindings.IntoMap
 
 @Module
 abstract class FragmentModule {
-    @Binds
-    @IntoMap
-    @ClassKey(MapsFragment::class)
-    abstract fun bindMapFragmentInjectorFactory(factory: DaggerViewModelFactory)
+//    @Binds
+//    @IntoMap
+//    @ClassKey(MapsFragment::class)
+    @ContributesAndroidInjector
+    abstract fun bindMapFragmentInjectorFactory(): MapsFragment
 }
