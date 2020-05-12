@@ -13,10 +13,8 @@ import javax.inject.Singleton
     ActivityBindingModule::class,
     AndroidSupportInjectionModule::class,
     ViewModelModule::class,
-    FirebaseRepositoryModule::class,
-    ViewStateModule::class])
+    FirebaseRepositoryModule::class])
 interface MyComponents{
-    fun inject(app: FayucaFinderApplication)
 
     @Component.Builder
     interface Builder {
@@ -24,4 +22,6 @@ interface MyComponents{
         fun application(app: Application): Builder
         fun build(): MyComponents
     }
+
+    fun inject(app: FayucaFinderApplication)
 }

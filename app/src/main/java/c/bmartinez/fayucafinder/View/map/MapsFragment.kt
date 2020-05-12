@@ -13,10 +13,6 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 
 import androidx.lifecycle.*
-import c.bmartinez.fayucafinder.Base.BaseFragment
-import c.bmartinez.fayucafinder.DataInjection.Components.MyComponents
-import c.bmartinez.fayucafinder.DataInjection.Scope.ActivityScoped
-import c.bmartinez.fayucafinder.FayucaFinderApplication
 import c.bmartinez.fayucafinder.Model.Trucks
 import c.bmartinez.fayucafinder.R
 import c.bmartinez.fayucafinder.ViewModel.MapViewModel
@@ -27,20 +23,25 @@ import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 //@Inject constructor(viewModel: @JvmSuppressWildcards(true) MapViewModel): BaseFragment<MapViewModel, MapViewState>(viewModel),
 @Suppress("DEPRECATION")
 class MapsFragment: Fragment(),  OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
+    //Needed for user location updates and Map
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
-
-    //Needed for user location updates
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
-
-
     private var locationUpdateState = false
+
+    @Inject
+    internal lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    lateinit var mapViewModel: MapViewModel
+
+    //Holds the data
     private lateinit var truckData: ArrayList<Trucks>
 
     companion object{
@@ -48,12 +49,11 @@ class MapsFragment: Fragment(),  OnMapReadyCallback, GoogleMap.OnMarkerClickList
         private const val REQUEST_CHECK_SETTINGS = 2
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        this.viewModel = ViewModelProviders.of(this, viewModelFactory).get(MapViewModel::class.java)
-        viewModel.startInitialActivity()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-        setHasOptionsMenu(true)
+        AndroidSupportInjection.inject(this)
+        initializeViewModel()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -64,6 +64,22 @@ class MapsFragment: Fragment(),  OnMapReadyCallback, GoogleMap.OnMarkerClickList
         locationRequest = LocationRequest()
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setUpMarkersOfTrucks(truckData)
+    }
+
+    private fun initializeViewModel() {
+        mapViewModel = ViewModelProviders.of(this, viewModelFactory).get(MapViewModel::class.java)
+        mapViewModel.getTruckData().observe(this, Observer { it ->
+            if(it!!.isEmpty()){
+                for(x in it)
+                    truckData.add(x)
+            }
+        })
     }
 
     /**

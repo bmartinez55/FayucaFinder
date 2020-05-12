@@ -2,15 +2,14 @@ package c.bmartinez.fayucafinder.ViewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import c.bmartinez.fayucafinder.DataInjection.Scope.AppScoped
 import java.lang.Exception
 import java.lang.RuntimeException
 import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
 
-@AppScoped
-class DaggerViewModelFactory @Inject constructor(private val viewModels: @JvmSuppressWildcards(true) Map<Class<out ViewModel>,
+@Singleton
+class DaggerViewModelFactory @Inject constructor(private val viewModels: @JvmSuppressWildcards(true) MutableMap<Class<out ViewModel>,
         @JvmSuppressWildcards(true) Provider<ViewModel>>): ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
