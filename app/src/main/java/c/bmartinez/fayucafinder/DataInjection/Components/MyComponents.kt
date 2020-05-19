@@ -1,6 +1,7 @@
 package c.bmartinez.fayucafinder.DataInjection.Components
 
 import android.app.Application
+import androidx.fragment.app.Fragment
 import c.bmartinez.fayucafinder.DataInjection.Module.*
 import c.bmartinez.fayucafinder.FayucaFinderApplication
 import dagger.BindsInstance
@@ -20,8 +21,10 @@ interface MyComponents{
     interface Builder {
         @BindsInstance
         fun application(app: Application): Builder
+
         fun build(): MyComponents
     }
 
-    fun inject(app: FayucaFinderApplication)
+    //fun inject(app: FayucaFinderApplication): Void
+    fun inject(fragment: Fragment)
 }

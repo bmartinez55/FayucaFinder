@@ -38,7 +38,6 @@ class MapsFragment: Fragment(),  OnMapReadyCallback, GoogleMap.OnMarkerClickList
 
     @Inject
     internal lateinit var viewModelFactory: ViewModelProvider.Factory
-
     lateinit var mapViewModel: MapViewModel
 
     //Holds the data

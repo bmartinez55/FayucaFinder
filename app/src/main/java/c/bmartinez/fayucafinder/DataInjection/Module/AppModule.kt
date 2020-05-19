@@ -5,12 +5,16 @@ import c.bmartinez.fayucafinder.FayucaFinderApplication
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import javax.annotation.Nullable
 import javax.inject.Singleton
 //private val application: FayucaFinderApplication
-@Module(includes = [ActivityBindingModule::class])
-abstract class AppModule() {
+@Module
+class AppModule() {
     @Provides
-    abstract fun provideApplication(application: FayucaFinderApplication)
+    @Singleton
+    fun provideApplication(application: FayucaFinderApplication): Application {
+        return application
+    }
     //abstract fun bindContext(application: Application): Context
 
 }
