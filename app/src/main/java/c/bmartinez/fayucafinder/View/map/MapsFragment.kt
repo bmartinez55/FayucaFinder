@@ -51,7 +51,7 @@ class MapsFragment: Fragment(),  OnMapReadyCallback, GoogleMap.OnMarkerClickList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        AndroidSupportInjection.inject(this)
+        //AndroidSupportInjection.inject(this)
         initializeViewModel()
     }
 

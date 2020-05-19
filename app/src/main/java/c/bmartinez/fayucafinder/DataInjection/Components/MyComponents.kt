@@ -6,6 +6,7 @@ import c.bmartinez.fayucafinder.DataInjection.Module.*
 import c.bmartinez.fayucafinder.FayucaFinderApplication
 import dagger.BindsInstance
 import dagger.Component
+import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
@@ -15,7 +16,7 @@ import javax.inject.Singleton
     AndroidSupportInjectionModule::class,
     ViewModelModule::class,
     FirebaseRepositoryModule::class])
-interface MyComponents{
+interface MyComponents: AndroidInjector<FayucaFinderApplication>{
 
     @Component.Builder
     interface Builder {
@@ -24,7 +25,4 @@ interface MyComponents{
 
         fun build(): MyComponents
     }
-
-    //fun inject(app: FayucaFinderApplication): Void
-    fun inject(fragment: Fragment)
 }
