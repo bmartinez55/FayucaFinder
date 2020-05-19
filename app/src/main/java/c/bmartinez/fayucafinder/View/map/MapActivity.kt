@@ -21,22 +21,22 @@ import dagger.android.support.DaggerAppCompatActivity
 import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
-
-class MapActivity :DaggerAppCompatActivity(), HasSupportFragmentInjector {
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+//HasSupportFragmentInjector
+class MapActivity :DaggerAppCompatActivity()  {
+//    @Inject
+//    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
     lateinit var mapFragment: MapsFragment
     lateinit var components: MyComponents
 
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
-        return super.supportFragmentInjector()
-    }
+//    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
+//        return super.supportFragmentInjector()
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         FirebaseApp.initializeApp(this)
-        AndroidInjection.inject(this)
+        //AndroidInjection.inject(this)
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 

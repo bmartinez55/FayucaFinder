@@ -10,11 +10,11 @@ import javax.inject.Singleton
 //private val application: FayucaFinderApplication
 @Module
 class AppModule() {
-    @Provides
-    @Singleton
-    fun provideApplication(application: FayucaFinderApplication): Application {
-        return application
-    }
+//    @Provides
+//    @Singleton
+//    fun provideApplication(application: FayucaFinderApplication): Application {
+//        return application
+//    }
     //abstract fun bindContext(application: Application): Context
 
 }
