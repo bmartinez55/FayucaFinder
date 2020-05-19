@@ -3,6 +3,7 @@ package c.bmartinez.fayucafinder
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
+import c.bmartinez.fayucafinder.DataInjection.Components.DaggerMyComponents
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -18,6 +19,6 @@ class FayucaFinderApplication: Application(), HasActivityInjector{
         DaggerMyComponents.builder().application(this).build().inject(this)
     }
 
-    override fun activityInjector(): AndroidInjector<Activity> = androidInjectorFactory
+    override fun activityInjector(): AndroidInjector<Activity>? {return androidInjectorFactory }
 }
 

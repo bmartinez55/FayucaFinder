@@ -3,6 +3,8 @@ package c.bmartinez.fayucafinder.View.map
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.navigation.NavController
 import androidx.navigation.Navigation

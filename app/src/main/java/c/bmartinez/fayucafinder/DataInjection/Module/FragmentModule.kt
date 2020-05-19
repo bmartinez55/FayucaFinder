@@ -11,9 +11,6 @@ import dagger.multibindings.IntoMap
 
 @Module
 abstract class FragmentModule {
-//    @Binds
-//    @IntoMap
-//    @ClassKey(MapsFragment::class)
     @ContributesAndroidInjector
     abstract fun bindMapFragmentInjectorFactory(): MapsFragment
 }
