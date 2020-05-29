@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import c.bmartinez.fayucafinder.Model.Trucks
 import c.bmartinez.fayucafinder.R
-import c.bmartinez.fayucafinder.ViewModel.MapViewModel
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
@@ -23,11 +22,11 @@ import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 //@Inject constructor(viewModel: @JvmSuppressWildcards(true) MapViewModel): BaseFragment<MapViewModel, MapViewState>(viewModel),
 @Suppress("DEPRECATION")
-class MapsFragment: Fragment(),  OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
+class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
     //Needed for user location updates and Map
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -51,7 +50,6 @@ class MapsFragment: Fragment(),  OnMapReadyCallback, GoogleMap.OnMarkerClickList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //AndroidSupportInjection.inject(this)
         initializeViewModel()
     }
 

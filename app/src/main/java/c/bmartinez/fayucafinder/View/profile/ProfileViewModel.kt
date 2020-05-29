@@ -1,4 +1,4 @@
-package c.bmartinez.fayucafinder.ViewModel
+package c.bmartinez.fayucafinder.View.profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

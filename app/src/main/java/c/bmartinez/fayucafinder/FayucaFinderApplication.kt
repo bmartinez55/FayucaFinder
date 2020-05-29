@@ -1,19 +1,13 @@
 package c.bmartinez.fayucafinder
 
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.Application
-import c.bmartinez.fayucafinder.DataInjection.Components.DaggerMyComponents
+import c.bmartinez.fayucafinder.DataInjection.Components.DaggerAppComponent
 import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import javax.inject.Inject
+import dagger.android.support.DaggerApplication
 
-@SuppressLint("Registered")
 class FayucaFinderApplication: DaggerApplication() {
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        return DaggerMyComponents.builder().application(this).build()
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication>? {
+        return DaggerAppComponent.builder().application(this).build()
     }
+
 }
 
