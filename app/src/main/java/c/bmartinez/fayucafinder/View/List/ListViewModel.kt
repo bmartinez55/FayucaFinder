@@ -1,4 +1,4 @@
-package c.bmartinez.fayucafinder.ViewModel
+package c.bmartinez.fayucafinder.View.List
 
 import androidx.lifecycle.ViewModel
 
