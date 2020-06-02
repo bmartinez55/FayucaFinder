@@ -9,11 +9,11 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "c.bmartinez.fayucafinder"
         minSdkVersion 23
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -79,13 +79,13 @@ dependencies {
     kapt 'androidx.lifecycle:lifecycle-common-java8:2.2.0'
 
     api 'com.google.dagger:dagger:2.27'
-    api 'com.google.dagger:dagger-android:2.16'
-    api 'com.google.dagger:dagger-android-support:2.16'
+    api 'com.google.dagger:dagger-android:2.27'
+    api 'com.google.dagger:dagger-android-support:2.27'
 
     annotationProcessor 'com.google.dagger:dagger-compiler:2.27'
     kapt 'com.google.dagger:dagger-compiler:2.27'
 
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.16'
-    kapt 'com.google.dagger:dagger-android-processor:2.16'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.27'
+    kapt 'com.google.dagger:dagger-android-processor:2.27'
 
 }

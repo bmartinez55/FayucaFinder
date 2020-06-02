@@ -1,5 +1,6 @@
 package c.bmartinez.fayucafinder.View.map
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.IntentSender
@@ -13,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 
 import androidx.lifecycle.*
+import c.bmartinez.fayucafinder.DataInjection.ViewModelFactory
 import c.bmartinez.fayucafinder.Model.Trucks
 import c.bmartinez.fayucafinder.R
 import com.google.android.gms.common.api.ResolvableApiException
@@ -31,27 +33,28 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
-    private lateinit var locationCallback: LocationCallback
+    private var locationCallback: LocationCallback = LocationCallback()
     private lateinit var locationRequest: LocationRequest
     private var locationUpdateState = false
 
     @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: ViewModelFactory
+
     lateinit var mapViewModel: MapViewModel
 
     //Holds the data
-    private lateinit var truckData: ArrayList<Trucks>
+     private var truckData: ArrayList<Trucks> = arrayListOf()
 
     companion object{
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
         private const val REQUEST_CHECK_SETTINGS = 2
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        initializeViewModel()
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//
+//
+//    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_map,container,false)
@@ -63,13 +66,10 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
         return view
     }
 
+    @SuppressLint("FragmentLiveDataObserve")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUpMarkersOfTrucks(truckData)
-    }
-
-    private fun initializeViewModel() {
         mapViewModel = ViewModelProviders.of(this, viewModelFactory).get(MapViewModel::class.java)
         mapViewModel.getTruckData().observe(this, Observer { it ->
             if(it!!.isEmpty()){
@@ -77,6 +77,7 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
                     truckData.add(x)
             }
         })
+        setUpMarkersOfTrucks(truckData)
     }
 
     /**
@@ -111,6 +112,7 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
         getCurrentLocation()
     }
 
+    @SuppressLint("MissingPermission")
     private fun getCurrentLocation(){
         map.isMyLocationEnabled = true
 
