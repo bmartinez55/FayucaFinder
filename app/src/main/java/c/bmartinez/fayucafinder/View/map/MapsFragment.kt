@@ -7,11 +7,11 @@ import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.Fragment
 
 import androidx.lifecycle.*
 import c.bmartinez.fayucafinder.DataInjection.ViewModelFactory
@@ -26,7 +26,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
-//@Inject constructor(viewModel: @JvmSuppressWildcards(true) MapViewModel): BaseFragment<MapViewModel, MapViewState>(viewModel),
+
 @Suppress("DEPRECATION")
 class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
     //Needed for user location updates and Map
@@ -50,12 +50,6 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
         private const val REQUEST_CHECK_SETTINGS = 2
     }
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//
-//
-//    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_map,container,false)
         val mapSupport: SupportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
@@ -71,7 +65,7 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
         super.onViewCreated(view, savedInstanceState)
 
         mapViewModel = ViewModelProviders.of(this, viewModelFactory).get(MapViewModel::class.java)
-        mapViewModel.getTruckData().observe(this, Observer { it ->
+        mapViewModel.getDataFromRepo().observe(this, Observer { it ->
             if(it!!.isEmpty()){
                 for(x in it)
                     truckData.add(x)
@@ -127,7 +121,7 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     private fun placeMarkerOnMap(location: LatLng){
         val markerOptions = MarkerOptions().position(location)
-
+        Log.d("DATA CHECK!", "${location.latitude}, ${location.longitude}")
         map.addMarker(markerOptions)
     }
 
