@@ -66,9 +66,12 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
 
         mapViewModel = ViewModelProviders.of(this, viewModelFactory).get(MapViewModel::class.java)
         mapViewModel.getDataFromRepo().observe(this, Observer { it ->
-            if(it!!.isEmpty()){
+            if(it!!.isNotEmpty()){
                 for(x in it)
                     truckData.add(x)
+            }
+            else{
+                Log.d("DATA CHECK", "Data is not being collected properly")
             }
         })
         setUpMarkersOfTrucks(truckData)

@@ -4,6 +4,6 @@ import com.google.firebase.firestore.GeoPoint
 import javax.inject.Inject
 import java.util.*
 
-data class Trucks @Inject constructor(val name: String,
-                                 val description: String,
-                                 val location: GeoPoint)
+data class Trucks @Inject constructor(var name: String?,
+                                 var description: String?,
+                                 var location: GeoPoint?)
