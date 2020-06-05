@@ -25,7 +25,6 @@ class MapViewModel @Inject constructor(val fireRepository: FireRepository): View
                 truckLiveData.value = null
                 return@EventListener
             }
-
             val savedTrucksList: MutableList<Trucks> = mutableListOf()
             for(it in value!!){
                 val truckObj = it.toObject(Trucks::class.java)

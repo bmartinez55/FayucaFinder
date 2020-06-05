@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentController
@@ -31,7 +32,7 @@ import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 @Suppress("DEPRECATION")
-class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
+class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener{
     //Needed for user location updates and Map
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -137,9 +138,12 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
     private fun placeMarkerOnMap(trucks: Trucks){
         val latLng = LatLng(trucks.location!!.latitude,trucks.location.longitude)
 
-        val markerOptions = MarkerOptions().position(latLng).title(trucks.name.toString())
+        val markerOptions = MarkerOptions().position(latLng).title(trucks.name.toString()).snippet(trucks.description.toString()).
+            infoWindowAnchor(0.5f,0.5f)
+
         Log.d("DATA CHECK!", "${trucks.location.latitude}, ${trucks.location.longitude}")
         map.addMarker(markerOptions)
+        map.setOnInfoWindowClickListener(this)
     }
 
     private fun startLocationUpdates(){
@@ -185,6 +189,10 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
                 }
             }
         }
+    }
+
+    override fun onInfoWindowClick(p0: Marker?) {
+        Toast.makeText(context, "Info window clicked", Toast.LENGTH_LONG).show()
     }
 
     //starts the update request if it has a RESULT_OK result
