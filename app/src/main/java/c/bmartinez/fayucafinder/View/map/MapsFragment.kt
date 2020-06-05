@@ -72,7 +72,7 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
             if(it!!.isNotEmpty()){
                 for(x in it) {
                     Log.i("INFO", "Heres the truck ${x.name}")
-                    x.location?.latitude?.let { it1 -> setUpMarkersOfTrucks(it1,x.location.longitude) }
+                    placeMarkerOnMap(x)
                     truckData.add(x)
                 }
             }
@@ -134,9 +134,11 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
         }
     }
 
-    private fun placeMarkerOnMap(location: LatLng){
-        val markerOptions = MarkerOptions().position(location)
-        Log.d("DATA CHECK!", "${location.latitude}, ${location.longitude}")
+    private fun placeMarkerOnMap(trucks: Trucks){
+        val latLng = LatLng(trucks.location!!.latitude,trucks.location.longitude)
+
+        val markerOptions = MarkerOptions().position(latLng).title(trucks.name.toString())
+        Log.d("DATA CHECK!", "${trucks.location.latitude}, ${trucks.location.longitude}")
         map.addMarker(markerOptions)
     }
 
@@ -217,11 +219,6 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
 
     override fun onMarkerClick(p0: Marker?): Boolean = false
     private fun isFusedLocationClientInitialized() = ::fusedLocationClient.isInitialized
-
-    private fun setUpMarkersOfTrucks(lat: Double, long: Double) {
-        val latLng = LatLng(lat,long)
-        placeMarkerOnMap(latLng)
-    }
 
 //    private fun registerLocationListener() {
 //        //Initialize location callback object
