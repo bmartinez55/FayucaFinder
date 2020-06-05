@@ -67,14 +67,16 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
         mapViewModel = ViewModelProviders.of(this, viewModelFactory).get(MapViewModel::class.java)
         mapViewModel.getDataFromRepo().observe(this, Observer { it ->
             if(it!!.isNotEmpty()){
-                for(x in it)
+                for(x in it) {
+                    Log.i("INFO", "Heres the truck ${x.name}")
+                    x.location?.latitude?.let { it1 -> setUpMarkersOfTrucks(it1,x.location.longitude) }
                     truckData.add(x)
+                }
             }
             else{
                 Log.d("DATA CHECK", "Data is not being collected properly")
             }
         })
-        setUpMarkersOfTrucks(truckData)
     }
 
     /**
@@ -206,11 +208,9 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
     override fun onMarkerClick(p0: Marker?): Boolean = false
     private fun isFusedLocationClientInitialized() = ::fusedLocationClient.isInitialized
 
-    private fun setUpMarkersOfTrucks(trucks: ArrayList<Trucks>) {
-        for(it in trucks){
-            val latLng = LatLng(it.location.latitude, it.location.longitude)
-            placeMarkerOnMap(latLng)
-        }
+    private fun setUpMarkersOfTrucks(lat: Double, long: Double) {
+        val latLng = LatLng(lat,long)
+        placeMarkerOnMap(latLng)
     }
 
 //    private fun registerLocationListener() {

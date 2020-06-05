@@ -10,6 +10,7 @@ import androidx.navigation.ui.NavigationUI
 import c.bmartinez.fayucafinder.DataInjection.Components.AppComponent
 import c.bmartinez.fayucafinder.DataInjection.ViewModelFactory
 import c.bmartinez.fayucafinder.R
+import c.bmartinez.fayucafinder.Utilities.ActivityUtilities
 import com.google.firebase.FirebaseApp
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 //HasSupportFragmentInjector
 class MapActivity :DaggerAppCompatActivity()  {
-    lateinit var mapFragment: MapsFragment
+    private var mapFragment: MapsFragment = MapsFragment()
     lateinit var components: AppComponent
 
 //    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
@@ -37,8 +38,8 @@ class MapActivity :DaggerAppCompatActivity()  {
 
         noActionBar()
         setupBottomNavBar(navController)
-        //setUpActivity()
-        testFragment()
+        setUpActivity()
+        //testFragment()
     }
 
     private fun testFragment(){
@@ -56,15 +57,15 @@ class MapActivity :DaggerAppCompatActivity()  {
         actionBar?.hide()
     }
 
-    //private fun setUpActivity(){
-        //var fragment = supportFragmentManager.findFragmentById(R.id.map)
+    private fun setUpActivity(){
+        var fragment = supportFragmentManager.findFragmentById(R.id.map)
         //fragment = supportFragmentManager.beginTransaction().replace(R.id.main_container, R.id.map )
 
-        //if(fragment == null){
-            //fragment = mapFragment
-            //ActivityUtilities.addFragmentToActivity(supportFragmentManager,fragment,
-            //R.id.map)
-        //}
-    //}
+        if(fragment == null){
+            fragment = mapFragment
+            ActivityUtilities.addFragmentToActivity(supportFragmentManager,fragment,
+            R.id.map)
+        }
+    }
 }
 
