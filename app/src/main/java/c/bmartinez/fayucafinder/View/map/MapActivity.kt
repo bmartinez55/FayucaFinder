@@ -21,10 +21,6 @@ class MapActivity :DaggerAppCompatActivity()  {
     private var mapFragment: MapsFragment = MapsFragment()
     lateinit var components: AppComponent
 
-//    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
-//        return super.supportFragmentInjector()
-//    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

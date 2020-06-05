@@ -1,5 +1,6 @@
 package c.bmartinez.fayucafinder.View.map
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
@@ -12,6 +13,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentController
 
 import androidx.lifecycle.*
 import c.bmartinez.fayucafinder.DataInjection.ViewModelFactory
@@ -100,26 +103,33 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
         createLocationRequest()
     }
 
-    private fun setUpMap(){
-        if(context?.let { ActivityCompat.checkSelfPermission(it, android.Manifest.permission.ACCESS_FINE_LOCATION) } !=
-                PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(
-                context as Activity, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-            LOCATION_PERMISSION_REQUEST_CODE)
-            return
-        }
-        getCurrentLocation()
-    }
+   private fun isPermissionGranted(): Boolean{
+       return context?.let { ContextCompat.checkSelfPermission(it, Manifest.permission.ACCESS_FINE_LOCATION) } ==
+               PackageManager.PERMISSION_GRANTED
+   }
 
     @SuppressLint("MissingPermission")
-    private fun getCurrentLocation(){
-        map.isMyLocationEnabled = true
+    private fun setUpMap(){
+        if(isPermissionGranted()) {
+            map.isMyLocationEnabled = true
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                if(location != null){
+                    lastLocation = location
+                    val currentCoordinates = LatLng(location.latitude, location.longitude)
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentCoordinates, 12.0f))
+                }else{
+                    ActivityCompat.requestPermissions(context as Activity, arrayOf<String>(
+                        Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE
+                    )
+                }
+            }
+        }
+    }
 
-        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-            if(location != null){
-                lastLocation = location
-                val currentCoordinates = LatLng(location.latitude, location.longitude)
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentCoordinates, 12.0f))
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if(requestCode == LOCATION_PERMISSION_REQUEST_CODE){
+            if(grantResults.contains(PackageManager.PERMISSION_GRANTED)){
+                setUpMap()
             }
         }
     }
