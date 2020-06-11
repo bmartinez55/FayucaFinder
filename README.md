@@ -7,4 +7,4 @@ FayucaFinder is an application that shows California's mobile food stand locatio
 - [x] Setup Google Maps API
 - [x] Set up Firebase
 - [x] Integrate Google Maps API and Firebase to the Android App
-*Completed on 2/23/20*
+- *Completed on 2/23/20*
