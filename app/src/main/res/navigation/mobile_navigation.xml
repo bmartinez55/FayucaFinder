@@ -3,7 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_map">
+    app:startDestination="@+id/splashFragment">
+
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="c.bmartinez.fayucafinder.View.welcome.WelcomeFragment"
+        android:label="WelcomeFragment"
+        tools:layout="@layout/fragment_welcome">
+
+        <action
+            android:id="@+id/action_splash_to_Map"
+            app:destination="@+id/navigation_map"/>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_map"
