@@ -35,11 +35,6 @@ class MapActivity :DaggerAppCompatActivity()  {
         noActionBar()
         setupBottomNavBar(navController)
         setUpActivity()
-        //testFragment()
-    }
-
-    private fun testFragment(){
-        supportFragmentManager.beginTransaction().replace(R.id.main_container, MapsFragment()).commit()
     }
 
     private fun setupBottomNavBar(navController: NavController){
