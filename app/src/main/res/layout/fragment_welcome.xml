@@ -3,8 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha=".3"
+        android:foreground="@color/colorPrimaryDark"
+        android:scaleType="centerCrop"
+        android:src="@drawable/truck_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/logoImageView"
@@ -25,7 +36,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="155dp"
         android:layout_marginEnd="55dp"
         android:background="@drawable/btn_rounded"
         android:text="Login"
@@ -39,11 +50,11 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="150dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="1dp"
         android:layout_marginEnd="150dp"
         android:layout_marginBottom="155dp"
-        android:text="Sign Up"
         android:background="@drawable/btn_rounded_nocolor"
+        android:text="Sign Up"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
