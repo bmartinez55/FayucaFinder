@@ -53,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@id/registerEmailInput">
 
         <EditText
-            android:id="@+id/emailEditText"
+            android:id="@+id/registerUserNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/username"
@@ -63,4 +63,64 @@
             android:textStyle="bold"
             tools:ignore="TextFields" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/registerPasswordInput"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registerUsernameInput">
+
+        <EditText
+            android:id="@+id/registerPasswordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/createAccountButton"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="150dp"
+        android:backgroundTint="@color/red"
+        android:text="@string/create_account"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerPasswordInput" />
+
+    <TextView
+        android:id="@+id/switchToLoginTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="6dp"
+        android:text="Already have an account?"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createAccountButton" />
+
+    <Button
+        android:id="@+id/switchToLoginButton"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="115dp"
+        android:layout_marginBottom="82dp"
+        android:background="@android:color/transparent"
+        android:text="Login "
+        android:textColor="#3F51B5"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/switchToLoginTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
