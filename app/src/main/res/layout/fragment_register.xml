@@ -110,14 +110,15 @@
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerPasswordInput" />
+        app:layout_constraintTop_toBottomOf="@+id/registerPasswordInput"
+        android:background="@drawable/round_btn_login"/>
 
     <TextView
         android:id="@+id/switchToLoginTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="20dp"
         android:text="Already have an account?"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createAccountButton" />
@@ -126,12 +127,14 @@
         android:id="@+id/switchToLoginButton"
         android:layout_width="50dp"
         android:layout_height="25dp"
-        android:layout_marginEnd="90dp"
-        android:layout_marginBottom="82dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="68dp"
         android:background="@android:color/transparent"
         android:text="Login "
-        android:textColor="#3F51B5"
-        android:textSize="12sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/blue"
+        android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/switchToLoginTextView" />
