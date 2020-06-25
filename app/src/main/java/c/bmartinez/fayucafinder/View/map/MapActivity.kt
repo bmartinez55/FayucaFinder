@@ -16,7 +16,6 @@ import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-//HasSupportFragmentInjector
 class MapActivity :DaggerAppCompatActivity()  {
     private var mapFragment: MapsFragment = MapsFragment()
     lateinit var components: AppComponent
