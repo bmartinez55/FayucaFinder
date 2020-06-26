@@ -13,7 +13,7 @@ import javax.inject.Singleton
 @Singleton
 class FireRepository {
     private val database = FirebaseFirestore.getInstance()
-    private val firestoreAuth = FirebaseAuth.getInstance()
+    val firestoreAuth = FirebaseAuth.getInstance()
     //lateinit var  storage: FirebaseStorage
     //private val storageRef: StorageReference? = storage.reference
 
