@@ -1,4 +1,6 @@
 package c.bmartinez.fayucafinder.View.login
 
-class LoginViewModel {
+import androidx.lifecycle.ViewModel
+
+class LoginViewModel : ViewModel(){
 }
