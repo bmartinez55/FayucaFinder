@@ -4,5 +4,5 @@ import dagger.Module
 
 @Module
 class ViewStateModule {
-    
+
 }
