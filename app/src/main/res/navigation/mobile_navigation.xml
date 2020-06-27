@@ -14,28 +14,56 @@
         <action
             android:id="@+id/action_splash_to_Map"
             app:destination="@+id/navigation_map"/>
+        <action
+            android:id="@+id/action_welcomeFragment_to_registerFragment2"
+            app:destination="@id/registerFragment2" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_map"
         android:name="c.bmartinez.fayucafinder.View.map.MapsFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_navigation_map_to_navigation_list"
+            app:destination="@id/navigation_list" />
+        <action
+            android:id="@+id/action_navigation_map_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_list"
         android:name="c.bmartinez.fayucafinder.View.List.ListFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_list" />
+        tools:layout="@layout/fragment_list" >
+        <action
+            android:id="@+id/action_navigation_list_to_navigation_map"
+            app:destination="@id/navigation_map" />
+        <action
+            android:id="@+id/action_navigation_list_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="c.bmartinez.fayucafinder.View.profile.ProfileFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_list"
+            app:destination="@id/navigation_list" />
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_map"
+            app:destination="@id/navigation_map" />
+    </fragment>
     <fragment
         android:id="@+id/registerFragment2"
         android:name="c.bmartinez.fayucafinder.View.register.RegisterFragment"
         android:label="RegisterFragment"
-        tools:layout="@layout/fragment_register"/>
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_registerFragment2_to_navigation_map"
+            app:destination="@id/navigation_map" />
+    </fragment>
 </navigation>
