@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.tasks.await
@@ -27,8 +28,9 @@ class FireRepository {
         return firestoreAuth.createUserWithEmailAndPassword(email,password).await()
     }
 
-    fun callData(): CollectionReference {
-        return database.collection("truckOwners")
+    //Switched from CollectionReference
+    suspend fun callData(): QuerySnapshot? {
+        return database.collection("truckOwners").get().await()
     }
 
 //    fun callStorage(): StorageReference{
