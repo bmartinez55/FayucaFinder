@@ -19,9 +19,4 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MapViewModel::class)
     protected abstract fun bindMapViewModel(viewModel: MapViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(LoginViewModel::class)
-    protected abstract fun bindLoginViewModel(viewModel: LoginViewModel): ViewModel
 }
