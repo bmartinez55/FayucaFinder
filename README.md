@@ -22,9 +22,9 @@ FayucaFinder is an application that shows California's mobile food stand locatio
       <td>Version 1 Register</td>
   </tr>
   <tr>
-    <td><img src=https://user-images.githubusercontent.com/25356544/86652106-f71c9080-bf98-11ea-9586-9de08d0bdf41.png" width=270 height=480></td>
-    <td><img src=https://user-images.githubusercontent.com/25356544/86652106-f71c9080-bf98-11ea-9586-9de08d0bdf41.png" width=270 height=480></td>
+    <td><img src=![WelcomUI](https://user-images.githubusercontent.com/25356544/86652106-f71c9080-bf98-11ea-9586-9de08d0bdf41.png) width=270 height=480></td>
+    <td><img src="https://user-images.githubusercontent.com/25356544/86652106-f71c9080-bf98-11ea-9586-9de08d0bdf41.png" width=270 height=480></td>
   </tr>
 </table>
   
-![WelcomUI](https://user-images.githubusercontent.com/25356544/86652106-f71c9080-bf98-11ea-9586-9de08d0bdf41.png)
+
