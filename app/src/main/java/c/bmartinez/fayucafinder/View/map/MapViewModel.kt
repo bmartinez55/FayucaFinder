@@ -18,20 +18,30 @@ class MapViewModel @Inject constructor(val fireRepository: FireRepository): View
 
     private var truckLiveData: MutableLiveData<List<Trucks>> = MutableLiveData()
 
-    fun getDataFromRepo(): LiveData<List<Trucks>>{
-        fireRepository.callData().addSnapshotListener(EventListener<QuerySnapshot> {value, exc ->
-            if(exc != null){
+    suspend fun getDataFromRepo(): LiveData<List<Trucks>>{
+        fireRepository.callData()?.forEach {
+            if(it != null){
                 Log.d("READ DATA", "Call failed to read snapshop")
                 truckLiveData.value = null
-                return@EventListener
+                return@forEach
             }
-            val savedTrucksList: MutableList<Trucks> = mutableListOf()
-            for(it in value!!){
-                val truckObj = it.toObject(Trucks::class.java)
-                savedTrucksList.add(truckObj)
-            }
-            truckLiveData.value = savedTrucksList
-        })
+            val savedTruckList: MutableList<Trucks> = mutableListOf()
+            savedTruckList.add(it)
+
+        }
+//            .addSnapshotListener(EventListener<QuerySnapshot> {value, exc ->
+//            if(exc != null){
+//                Log.d("READ DATA", "Call failed to read snapshop")
+//                truckLiveData.value = null
+//                return@EventListener
+//            }
+//            val savedTrucksList: MutableList<Trucks> = mutableListOf()
+//            for(it in value!!){
+//                val truckObj = it.toObject(Trucks::class.java)
+//                savedTrucksList.add(truckObj)
+//            }
+//            truckLiveData.value = savedTrucksList
+//        })
         return truckLiveData
     }
 }
