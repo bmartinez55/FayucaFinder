@@ -14,3 +14,6 @@ FayucaFinder is an application that shows California's mobile food stand locatio
 - [x] Incorporate all dependencies for Firebase
 - [x] Test connection of both API's 
 - *Completed on 2/25/20*
+
+## Prototype Images
+![WelcomUI](https://user-images.githubusercontent.com/25356544/86652106-f71c9080-bf98-11ea-9586-9de08d0bdf41.png)
