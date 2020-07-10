@@ -1,13 +1,11 @@
-package c.bmartinez.fayucafinder.View.login
+package c.bmartinez.fayucafinder.View.auth.login
 
 import android.os.Bundle
 import android.os.PersistableBundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import c.bmartinez.fayucafinder.R
 import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.activity_holder.view.*
 
 
 class LoginActivity : DaggerAppCompatActivity(){

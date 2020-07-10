@@ -39,7 +39,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".View.login.LoginActivity"
+        <activity android:name="c.bmartinez.fayucafinder.View.auth.login.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

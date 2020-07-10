@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="c.bmartinez.fayucafinder.View.login.LoginFragment"
+        android:name="c.bmartinez.fayucafinder.View.auth.login.LoginFragment"
         android:label="WelcomeFragment"
         tools:layout="@layout/fragment_welcome">
 
@@ -61,7 +61,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment2"
-        android:name="c.bmartinez.fayucafinder.View.register.RegisterFragment"
+        android:name="c.bmartinez.fayucafinder.View.auth.register.RegisterFragment"
         android:label="RegisterFragment"
         tools:layout="@layout/fragment_register">
         <action

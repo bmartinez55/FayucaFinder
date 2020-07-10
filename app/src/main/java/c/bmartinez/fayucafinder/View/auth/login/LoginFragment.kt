@@ -1,11 +1,9 @@
-package c.bmartinez.fayucafinder.View.login
+package c.bmartinez.fayucafinder.View.auth.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import c.bmartinez.fayucafinder.R
 import dagger.android.support.DaggerFragment
 
 class LoginFragment: DaggerFragment() {

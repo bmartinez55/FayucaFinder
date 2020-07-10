@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import c.bmartinez.fayucafinder.DataInjection.Components.ViewModelKey
 import c.bmartinez.fayucafinder.View.map.MapViewModel
 import c.bmartinez.fayucafinder.DataInjection.ViewModelFactory
-import c.bmartinez.fayucafinder.View.login.LoginViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

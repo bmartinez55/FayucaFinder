@@ -1,4 +1,4 @@
-package c.bmartinez.fayucafinder.View.register
+package c.bmartinez.fayucafinder.View.auth.register
 
 import android.os.Bundle
 import dagger.android.support.DaggerAppCompatActivity
