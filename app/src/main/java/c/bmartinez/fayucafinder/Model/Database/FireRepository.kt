@@ -14,19 +14,9 @@ import javax.inject.Singleton
 @Singleton
 class FireRepository {
     private val database = FirebaseFirestore.getInstance()
-    val firestoreAuth = FirebaseAuth.getInstance()
+
     //lateinit var  storage: FirebaseStorage
     //private val storageRef: StorageReference? = storage.reference
-
-    fun user(): FirebaseUser? = firestoreAuth.currentUser
-
-    suspend fun login(email: String, password: String): AuthResult {
-        return firestoreAuth.signInWithEmailAndPassword(email,password).await()
-    }
-
-    suspend fun register(email: String, password: String): AuthResult {
-        return firestoreAuth.createUserWithEmailAndPassword(email,password).await()
-    }
 
     //Switched from CollectionReference
     suspend fun callData(): QuerySnapshot? {

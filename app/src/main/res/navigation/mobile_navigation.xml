@@ -67,8 +67,5 @@
         <action
             android:id="@+id/action_registerFragment2_to_navigation_map"
             app:destination="@id/navigation_map" />
-        <action
-            android:id="@+id/action_registerFragment2_to_welcomeFragment"
-            app:destination="@id/welcomeFragment" />
     </fragment>
 </navigation>
