@@ -1,12 +1,7 @@
-package c.bmartinez.fayucafinder.View.login
+package c.bmartinez.fayucafinder.View.auth.login
 
-import android.nfc.Tag
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import c.bmartinez.fayucafinder.Model.Database.FireRepository
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(val fireRepository: FireRepository): ViewModel() {
