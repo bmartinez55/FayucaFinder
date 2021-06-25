@@ -1,6 +1,6 @@
 package c.bmartinez.fayucafinder
 
-import c.bmartinez.fayucafinder.DataInjection.Components.DaggerAppComponent
+import c.bmartinez.fayucafinder.datainjection.Components.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 
