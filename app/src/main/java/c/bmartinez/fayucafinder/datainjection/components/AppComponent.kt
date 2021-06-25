@@ -13,11 +13,11 @@ import javax.inject.Singleton
  * AppComponent interface binds the Application instance to the component
  */
 
+@Singleton
 @Component(modules = [AppModule::class,
     ActivityBindingModule::class,
     AndroidSupportInjectionModule::class,
     ViewModelModule::class])
-@Singleton
 interface AppComponent: AndroidInjector<FayucaFinderApplication>{
 
     @Component.Factory
