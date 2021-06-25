@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/welcomeFragment"
-        android:name="c.bmartinez.fayucafinder.View.auth.login.LoginFragment"
+        android:name="c.bmartinez.fayucafinder.view.auth.login.LoginFragment"
         android:label="WelcomeFragment"
         tools:layout="@layout/fragment_welcome">
 
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/navigation_map"
-        android:name="c.bmartinez.fayucafinder.View.map.MapsFragment"
+        android:name="c.bmartinez.fayucafinder.view.map.MapsFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_map" >
         <action
@@ -36,7 +36,7 @@
 
     <fragment
         android:id="@+id/navigation_list"
-        android:name="c.bmartinez.fayucafinder.View.List.ListFragment"
+        android:name="c.bmartinez.fayucafinder.view.List.ListFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_list" >
         <action
@@ -49,7 +49,7 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="c.bmartinez.fayucafinder.View.profile.ProfileFragment"
+        android:name="c.bmartinez.fayucafinder.view.profile.ProfileFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -61,7 +61,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment2"
-        android:name="c.bmartinez.fayucafinder.View.auth.register.RegisterFragment"
+        android:name="c.bmartinez.fayucafinder.view.auth.register.RegisterFragment"
         android:label="RegisterFragment"
         tools:layout="@layout/fragment_register">
         <action
