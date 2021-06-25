@@ -1,4 +1,4 @@
-package c.bmartinez.fayucafinder.datainjection.Components
+package c.bmartinez.fayucafinder.datainjection.components
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey

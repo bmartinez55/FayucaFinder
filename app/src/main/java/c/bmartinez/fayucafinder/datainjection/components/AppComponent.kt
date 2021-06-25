@@ -1,7 +1,7 @@
-package c.bmartinez.fayucafinder.datainjection.Components
+package c.bmartinez.fayucafinder.datainjection.components
 
 import android.app.Application
-import c.bmartinez.fayucafinder.datainjection.Module.*
+import c.bmartinez.fayucafinder.datainjection.module.*
 import c.bmartinez.fayucafinder.FayucaFinderApplication
 import dagger.BindsInstance
 import dagger.Component
@@ -9,19 +9,19 @@ import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
+/**
+ * AppComponent interface binds the Application instance to the component
+ */
+
 @Component(modules = [AppModule::class,
     ActivityBindingModule::class,
     AndroidSupportInjectionModule::class,
-    ViewModelModule::class,
-    FirebaseRepositoryModule::class])
+    ViewModelModule::class])
 @Singleton
 interface AppComponent: AndroidInjector<FayucaFinderApplication>{
 
-    @Component.Builder
-    interface Builder {
-        @BindsInstance
-        fun application(app: Application): Builder
-
-        fun build(): AppComponent
+    @Component.Factory
+    interface Factory {
+        fun create(@BindsInstance app: Application): AppComponent
     }
 }

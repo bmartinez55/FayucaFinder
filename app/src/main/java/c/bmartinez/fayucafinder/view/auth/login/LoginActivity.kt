@@ -6,6 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import c.bmartinez.fayucafinder.R
 import dagger.android.support.DaggerAppCompatActivity
+import io.realm.Realm
 
 
 class LoginActivity : DaggerAppCompatActivity(){

@@ -1,4 +1,4 @@
-package c.bmartinez.fayucafinder.datainjection.Module
+package c.bmartinez.fayucafinder.datainjection.module
 
 import dagger.Module
 
