@@ -6,7 +6,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 /**
- * AppModule allows separation of different types of dependencies and then link them to components.
+ * AppModule allows app-level dependencies that do not fall into any category to be added.
  */
 
 @Module
