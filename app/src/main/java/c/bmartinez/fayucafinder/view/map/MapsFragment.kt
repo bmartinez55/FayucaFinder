@@ -29,7 +29,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-@Suppress("DEPRECATION")
+//@Suppress("DEPRECATION")
 class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener{
     //Needed for user location updates and Map
     private lateinit var map: GoogleMap
@@ -66,7 +66,7 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mapViewModel = ViewModelProviders.of(this, viewModelFactory).get(MapViewModel::class.java)
+        mapViewModel = ViewModelProvider(this, viewModelFactory).get(MapViewModel::class.java)
 //        mapViewModel.getDataFromRepo().observe(this, Observer { it ->
 //            if(it!!.isNotEmpty()){
 //                for(x in it) {

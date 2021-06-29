@@ -1,13 +1,14 @@
 package c.bmartinez.fayucafinder.view.map
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import javax.inject.Inject
 
-class MapViewModel @Inject constructor(): ViewModel() {
-    val TAG = "MAP_VIEW_MODEL"
+class MapViewModel @Inject constructor(private val app: Application): ViewModel() {
+    val TAG = MapViewModel::class.java.name
 
 
     //suspend fun getDataFromRepo(): LiveData<List<Trucks>>{
