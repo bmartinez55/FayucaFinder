@@ -6,21 +6,21 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
-import c.bmartinez.fayucafinder.datainjection.Components.AppComponent
+import c.bmartinez.fayucafinder.datainjection.components.AppComponent
 import c.bmartinez.fayucafinder.R
 import c.bmartinez.fayucafinder.utilities.ActivityUtilities
-import com.google.firebase.FirebaseApp
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MapActivity :DaggerAppCompatActivity()  {
+
+
     private var mapFragment: MapsFragment = MapsFragment()
     lateinit var components: AppComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        FirebaseApp.initializeApp(this)
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 

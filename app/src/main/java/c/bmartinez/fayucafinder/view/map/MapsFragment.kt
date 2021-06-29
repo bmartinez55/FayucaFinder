@@ -18,7 +18,6 @@ import androidx.core.content.ContextCompat
 
 import androidx.lifecycle.*
 import c.bmartinez.fayucafinder.datainjection.ViewModelFactory
-import c.bmartinez.fayucafinder.model.Trucks
 import c.bmartinez.fayucafinder.R
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
@@ -30,13 +29,13 @@ import com.google.android.gms.maps.model.MarkerOptions
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-@Suppress("DEPRECATION")
+//@Suppress("DEPRECATION")
 class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener{
     //Needed for user location updates and Map
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var lastLocation: Location
-    private var locationCallback: LocationCallback = LocationCallback()
+//    private var locationCallback: LocationCallback = LocationCallback()
     private lateinit var locationRequest: LocationRequest
     private var locationUpdateState = false
 
@@ -46,7 +45,7 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
     lateinit var mapViewModel: MapViewModel
 
     //Holds the data
-     private var truckData: ArrayList<Trucks> = arrayListOf()
+     //private var truckData: ArrayList<Trucks> = arrayListOf()
 
     companion object{
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -67,19 +66,19 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mapViewModel = ViewModelProviders.of(this, viewModelFactory).get(MapViewModel::class.java)
-        mapViewModel.getDataFromRepo().observe(this, Observer { it ->
-            if(it!!.isNotEmpty()){
-                for(x in it) {
-                    Log.i("INFO", "Heres the truck ${x.name}")
-                    placeMarkerOnMap(x)
-                    truckData.add(x)
-                }
-            }
-            else{
-                Log.d("DATA CHECK", "Data is not being collected properly")
-            }
-        })
+        mapViewModel = ViewModelProvider(this, viewModelFactory).get(MapViewModel::class.java)
+//        mapViewModel.getDataFromRepo().observe(this, Observer { it ->
+//            if(it!!.isNotEmpty()){
+//                for(x in it) {
+//                    Log.i("INFO", "Heres the truck ${x.name}")
+//                    placeMarkerOnMap(x)
+//                    truckData.add(x)
+//                }
+//            }
+//            else{
+//                Log.d("DATA CHECK", "Data is not being collected properly")
+//            }
+//        })
     }
 
     /**
@@ -134,30 +133,30 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
         }
     }
 
-    private fun placeMarkerOnMap(trucks: Trucks){
-        val latLng = LatLng(trucks.location!!.latitude,trucks.location.longitude)
+//    private fun placeMarkerOnMap(trucks: Trucks){
+//        val latLng = LatLng(trucks.location!!.latitude,trucks.location.longitude)
+//
+//        val markerOptions = MarkerOptions().position(latLng).title(trucks.name.toString()).snippet(trucks.description.toString()).
+//            infoWindowAnchor(0.5f,0.5f)
+//
+//        Log.d("DATA CHECK!", "${trucks.location.latitude}, ${trucks.location.longitude}")
+//        map.addMarker(markerOptions)
+//        map.setOnInfoWindowClickListener(this)
+//    }
 
-        val markerOptions = MarkerOptions().position(latLng).title(trucks.name.toString()).snippet(trucks.description.toString()).
-            infoWindowAnchor(0.5f,0.5f)
-
-        Log.d("DATA CHECK!", "${trucks.location.latitude}, ${trucks.location.longitude}")
-        map.addMarker(markerOptions)
-        map.setOnInfoWindowClickListener(this)
-    }
-
-    private fun startLocationUpdates(){
-        if(context?.let { ActivityCompat.checkSelfPermission(it, android.Manifest.permission.ACCESS_FINE_LOCATION) }
-        != PackageManager.PERMISSION_GRANTED) {
-            activity?.let {
-                ActivityCompat.requestPermissions(
-                    it,arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                    LOCATION_PERMISSION_REQUEST_CODE)
-            }
-            return
-        }
-        //registerLocationListener()
-        fusedLocationClient.requestLocationUpdates(locationRequest,locationCallback, null)
-    }
+//    private fun startLocationUpdates(){
+//        if(context?.let { ActivityCompat.checkSelfPermission(it, android.Manifest.permission.ACCESS_FINE_LOCATION) }
+//        != PackageManager.PERMISSION_GRANTED) {
+//            activity?.let {
+//                ActivityCompat.requestPermissions(
+//                    it,arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+//                    LOCATION_PERMISSION_REQUEST_CODE)
+//            }
+//            return
+//        }
+//        //registerLocationListener()
+//        fusedLocationClient.requestLocationUpdates(locationRequest,locationCallback, null)
+//    }
 
     private fun createLocationRequest() {
         locationRequest.interval = 10000
@@ -172,7 +171,7 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
 
         task?.addOnSuccessListener {
             locationUpdateState = true
-            startLocationUpdates()
+            //startLocationUpdates()
         }
 
         task?.addOnFailureListener { exception ->
@@ -200,7 +199,7 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
         if(requestCode == REQUEST_CHECK_SETTINGS){
             if(resultCode == Activity.RESULT_OK){
                 locationUpdateState = true
-                startLocationUpdates()
+                //startLocationUpdates()
             }
         }
     }
@@ -208,20 +207,20 @@ class MapsFragment: DaggerFragment(),  OnMapReadyCallback, GoogleMap.OnMarkerCli
     //stop location update request
     override fun onPause() {
         super.onPause()
-        fusedLocationClient.removeLocationUpdates(locationCallback)
+        //fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
     override fun onStart() {
         super.onStart()
-        startLocationUpdates()
+        //startLocationUpdates()
     }
 
     //restart the location update request
     override fun onResume() {
         super.onResume()
-        if(!locationUpdateState){
-            startLocationUpdates()
-        }
+//        if(!locationUpdateState){
+//            startLocationUpdates()
+//        }
     }
 
     override fun onMarkerClick(p0: Marker?): Boolean = false
