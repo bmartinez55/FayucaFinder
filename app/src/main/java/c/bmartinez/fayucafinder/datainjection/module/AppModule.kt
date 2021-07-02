@@ -1,6 +1,7 @@
 package c.bmartinez.fayucafinder.datainjection.module
 
 import android.app.Application
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -13,7 +14,5 @@ import javax.inject.Singleton
 abstract class AppModule() {
     @Singleton
     @Provides
-    fun checkDependencyReference(app: Application): Boolean {
-        return app == null
-    }
+    fun provideContext(app: Application): Context = app.applicationContext
 }
